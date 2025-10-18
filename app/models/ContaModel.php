@@ -1,7 +1,7 @@
 <?php
-namespace app\controllers;
+namespace app\models;
 
-class ContaController {
+class ContaModel {
     private $id;
     private $conta_nome;
     private $saldo;

@@ -1,46 +1,71 @@
 <?php
 use app\models\CaixaEletronicoModel;
+use app\dao\CaixaEletronicoDao;
 use app\core\Logger;
 use app\core\Notification;
 class CaixaEletronicoController {
-    private $model;
+    private $CaixaEletronicoModel;
+    private $dao;
     private $logger;
 
     public function __construct() {
-        $this->model = new CaixaEletronicoModel();
+        $this->CaixaEletronicoModel = new CaixaEletronicoModel();
+        $this->dao = new CaixaEletronicoDao();
         $this->logger = new Logger();
     }
 
     public function carregarAction() {
-
-        $this->model->carregar();
-        Notification::add('Caixa carregado com sucesso.', 'success');
-        $this->logger->log("Caixa carregado com 10 unidades de cada cédula e moeda.");
+        $novaEspecie = $this->CaixaEletronicoModel->calcularCarregamento();
+        try {
+            $this->dao->salvaQTDEspecieNoBanco($novaEspecie);
+            // Se salvar com sucesso, atualiza o model
+            $this->CaixaEletronicoModel->setEspecie($novaEspecie);
+            Notification::add('Caixa carregado com sucesso.', 'success');
+            $this->logger->log("Caixa carregado com 10 unidades de cada cédula e moeda.");
+        } catch (\Exception $e) {
+            Notification::add('Erro ao carregar o caixa. Tente novamente.', 'error');
+            $this->logger->log("Erro ao carregar caixa: " . $e->getMessage());
+        }
         // Redireciona ou exibe a view
     }
 
     public function descarregarAction() {
-        $this->model->descarregar();
-        Notification::add('Caixa descarregado.', 'info');
-        $this->logger->log("Caixa descarregado.");
+        $novaEspecie = $this->CaixaEletronicoModel->calcularDescarregamento();
+        try {
+            $this->dao->salvaQTDEspecieNoBanco($novaEspecie);
+            // Se salvar com sucesso, atualiza o model
+            $this->CaixaEletronicoModel->setEspecie($novaEspecie);
+            Notification::add('Caixa descarregado com sucesso.', 'success');
+            $this->logger->log("Caixa descarregado completamente.");
+        } catch (\Exception $e) {
+            Notification::add('Erro ao descarregar o caixa. Tente novamente.', 'error');
+            $this->logger->log("Erro ao descarregar caixa: " . $e->getMessage());
+        }
+        // Redireciona ou exibe a view
+
         // Redireciona ou exibe a view
     }
 
-    public function saqueAction($valor) {
+    public function saqueCaixaEletronicoAction($valor) {
+        $valorTotalCaixa = $this->CaixaEletronicoModel->getValorTotal();
+        if ($valor <= 0) {
+            Notification::add('Erro ao realizar o saque. Valor deve ser positivo.', 'error');
+            $this->logger->log("Erro ao realizar saque: valor deve ser positivo.");
+        }
+        if ($valor > $valorTotalCaixa) {
+            Notification::add("Saldo insuficiente no caixa para o saque de R$ $valor.", 'error');
+            $this->logger->log("Tentativa de saque de R$ $valor falhou: saldo insuficiente no caixa.");
+            // Redireciona ou exibe a view
+            return;
+        }
+
         try {
-            $resultado = $this->model->sacar($valor);
-            if ($resultado !== false) {
-                $mensagem = "Saque de R$ $valor realizado. Composição: ";
-                foreach ($resultado as $denominacao => $quantidade) {
-                    $mensagem .= "$quantidade x R$ $denominacao, ";
-                }
-                $mensagem = rtrim($mensagem, ', ');
-                Notification::add($mensagem, 'success');
-                $this->logger->log("Saque de R$ $valor realizado. Composição: " . json_encode($resultado));
-            } else {
-                Notification::add("Não foi possível realizar o saque de R$ $valor. Valor não pode ser composto com as cédulas e moedas disponíveis.", 'error');
-                $this->logger->log("Tentativa de saque de R$ $valor falhou: valor não pode ser composto.");
-            }
+            $CedulasSaque = $this->CaixaEletronicoModel->getCedulasParaSaque($valor);
+            $this->dao->salvaQTDEspecieNoBanco($CedulasSaque);
+            $this->CaixaEletronicoModel->setEspecie($CedulasSaque);
+            Notification::add('Saque no valor de R$ ' . number_format($valor, 2) . ' realizadocom sucesso.', 'success');
+            $this->logger->log("Saque no valor de R$ " . number_format($valor, 2) . " realizado com sucesso.");
+
         } catch (Exception $e) {
             Notification::add($e->getMessage(), 'error');
             $this->logger->log("Erro durante saque: " . $e->getMessage());
@@ -48,11 +73,15 @@ class CaixaEletronicoController {
         // Redireciona ou exibe a view
     }
 
-    public function depositoAction($cedulas, $moedas) {
+    public function depositoCaixaEletronicoAction($cedulas) {
         try {
-            $this->model->depositar($cedulas, $moedas);
+            $CedulasNoCaixa = $this->CaixaEletronicoModel->calculaDepositoCaixa($cedulas);
+            $totalDepositado = $this->CalculaTotalByCedulas($cedulas);
+            $this->dao->salvaQTDEspecieNoBanco($CedulasNoCaixa);
+            $this->CaixaEletronicoModel->setEspecie($CedulasNoCaixa);
             Notification::add('Depósito realizado com sucesso.', 'success');
-            $this->logger->log("Depósito realizado. Cédulas: " . json_encode($cedulas) . " Moedas: " . json_encode($moedas));
+            //EMANUEL REVISAR REGRA NO CASO DE CENTÁVOS
+            $this->logger->log("Deposito de R$ " . number_format($totalDepositado, 2) . " realizado com sucesso.");
         } catch (Exception $e) {
             Notification::add($e->getMessage(), 'error');
             $this->logger->log("Erro durante depósito: " . $e->getMessage());
@@ -60,16 +89,25 @@ class CaixaEletronicoController {
         // Redireciona ou exibe a view
     }
 
+    public function CalculaTotalByCedulas($cedulas) {
+        //EMANUEL NECESSÁRIO REALIZAR REVISÃO DE REGRA
+        $total = 0;
+        foreach ($cedulas as $denominacao => $quantidade) {
+            $total += $denominacao * $quantidade;
+        }
+        return $total;
+    }
+
     public function valorTotalAction() {
-        $total = $this->model->getValorTotal();
+        $total = $this->CaixaEletronicoModel->getValorTotal();
         // Exibe o valor total na view
         return $total;
     }
 
     // Método para exibir a view do caixa
     public function indexAction() {
-        $especie = $this->model->getEspecie();
-        $total = $this->model->getValorTotal();
+        $especie = $this->CaixaEletronicoModel->getEspecie();
+        $total = $this->CaixaEletronicoModel->getValorTotal();
         // Inclui a view
         include 'views/caixa/index.php';
     }

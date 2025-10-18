@@ -1,7 +1,9 @@
 <?php
 namespace app\models;
+use app\contracts\models\IContaModel;
+use app\contracts\dao\IContaDao;
 
-class ContaModel {
+class ContaModel implements IContaModel {
     private $id;
     private $conta_nome;
     private $saldo;
@@ -36,16 +38,21 @@ class ContaModel {
         return $this->id;
     }
 
-    public function Saque($valor) {
-        // Lógica de saque
+    public function loadDataConta($id, $conta_nome, $saldo) {
+        $this->setId($id);
+        $this->setContaNome($conta_nome);
+        $this->setSaldo($saldo);
     }
 
-    public function Deposito($valor) {
-        // Lógica de depósito
+    public function SaqueConta($valor) {
+        $this->saldo -= $valor;
     }
 
+    public function DepositoConta($valor) {
+        $this->saldo += $valor;
+    }
 
-    public function isSaquePermitido($valor) {
+    public function isSaquePermitidoConta($valor) {
         if ($valor > $this->saldo) {
             return false;
         }

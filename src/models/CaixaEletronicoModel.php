@@ -3,7 +3,6 @@ namespace app\models;
 use app\models\ContratoModel;
 use app\contracts\models\ICaixaEletronicoModel;
 use app\contracts\dao\ICaixaEletronicoDao;
-use app\core\Logger;
 use app\dao\CaixaEletronicoDao;
 
 class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoModel {
@@ -117,6 +116,5 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
         }
         return $total;
     }
-
 }
 ?>

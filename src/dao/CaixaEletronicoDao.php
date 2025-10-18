@@ -1,15 +1,14 @@
 <?php
 namespace app\dao;
 
-use app\core\Database;
-use app\core\Logger;
+use app\contracts\core\IDatabase;
 use app\contracts\dao\ICaixaEletronicoDao;
 
 class CaixaEletronicoDao implements ICaixaEletronicoDao {
     private $db;
     
-    public function __construct() {
-        $this->db = (new Database())->getConnection();
+    public function __construct(IDatabase $database) {
+        $this->db = $database->getConnection();
     }
 
     public function getQtdCadaCedula() {
@@ -43,8 +42,7 @@ class CaixaEletronicoDao implements ICaixaEletronicoDao {
             ];
             
         } catch (\Exception $e) {
-            Logger::log("Erro ao resgatar dados do banco: " . $e->getMessage());
-            throw new \Exception("Erro ao resgatar dados no banco: " . $e->getMessage());
+            throw new \Exception("Erro ao resgatar cedulas no banco: " . $e->getMessage());
         }
     }
 
@@ -97,13 +95,10 @@ class CaixaEletronicoDao implements ICaixaEletronicoDao {
                 ':qtd_010' => $aCedula[0.10],
                 ':qtd_005' => $aCedula[0.05]
             ]);
-
-            Logger::log("Quantidade de cédulas salvas no banco de dados");
             return true;
 
         } catch (\Exception $e) {
-            Logger::log("Erro ao salvar cédulas no banco: " . $e->getMessage());
-            throw new \Exception("Erro ao salvar no banco de dados: " . $e->getMessage());
+            throw new \Exception("Erro ao salvar cedulas no banco de dados: " . $e->getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace app\core;
-class Database {
+use app\contracts\core\IDatabase;
+class Database implements IDatabase {
     private $connection;
 
     public function __construct() {

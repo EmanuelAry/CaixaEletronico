@@ -1,9 +1,9 @@
 <?php
 require_once '../config/config.php';
-require_once '../src/Core/Router.php';
-require_once '../src/Core/Database.php';
-require_once '../src/Core/Log.php';
-require_once '../src/Core/Notification.php';
+require_once '../src/core/Router.php';
+require_once '../src/core/Database.php';
+require_once '../src/core/Log.php';
+require_once '../src/core/Notification.php';
 
 session_start();
 

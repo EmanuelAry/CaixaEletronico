@@ -1,6 +1,9 @@
 <?php
 namespace app\controllers;
-
+use app\models\CaixaEletronicoModel;
+use app\dao\CaixaEletronicoDao;
+use app\core\Logger;
+use app\core\Notification;
 class ContaController {
     private $id;
     private $conta_nome;

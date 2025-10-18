@@ -1,5 +1,5 @@
 <?php
-namespace core;
+namespace app\core;
 class Notification {
     public static function add($message, $type = 'info') {
         $_SESSION['notifications'][] = [

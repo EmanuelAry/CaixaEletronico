@@ -1,7 +1,7 @@
 <?php
-use models\CaixaEletronicoModel;
-use core\Logger;
-use core\Notification;
+use app\models\CaixaEletronicoModel;
+use app\core\Logger;
+use app\core\Notification;
 class CaixaEletronicoController {
     private $model;
     private $logger;

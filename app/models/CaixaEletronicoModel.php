@@ -1,7 +1,7 @@
 <?php
-namespace models;
-use core\Logger;
-use core\Database;
+namespace app\models;
+use app\core\Logger;
+use app\core\Database;
 class CaixaEletronicoModel {
 
 

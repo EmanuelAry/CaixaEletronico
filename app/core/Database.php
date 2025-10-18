@@ -1,5 +1,5 @@
 <?php
-namespace core;
+namespace app\core;
 class Database {
     private $connection;
 

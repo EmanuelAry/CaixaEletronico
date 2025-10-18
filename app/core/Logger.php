@@ -1,5 +1,5 @@
 <?php
-namespace core;
+namespace app\core;
 class Logger {
     public static function log($message, $level = 'INFO') {
         $timestamp = date('Y-m-d H:i:s');

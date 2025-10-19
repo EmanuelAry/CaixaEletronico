@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Define o base path para o projeto
+RewriteBase /caixaeletronico/public/
+
+# Se a requisição não for para um arquivo existente...
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# ...redireciona tudo para o index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Opcional: Força HTTPS (se necessário)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Opcional: Remove trailing slashes
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)/$ /$1 [L,R=301]

@@ -14,7 +14,8 @@ class ContaDao implements IContaDao {
     public function getAllContas() {
         try {
             $stmt = $this->db->query("SELECT * FROM conta");
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $retorno = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $retorno;
         } catch (\Exception $e) {
             throw new \Exception("Erro ao resgatar contas no banco: " . $e->getMessage());
         }
@@ -24,7 +25,8 @@ class ContaDao implements IContaDao {
         try {
             $stmt = $this->db->prepare("SELECT * FROM conta WHERE conta_id = :conta_id");
             $stmt->execute([':conta_id' => $id]);
-            return $stmt->fetch(\PDO::FETCH_ASSOC);
+            $retorno = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $retorno;
         } catch (\Exception $e) {
             throw new \Exception("Erro ao resgatar conta ID: " . $id . " no banco: " . $e->getMessage());
         }
@@ -33,7 +35,9 @@ class ContaDao implements IContaDao {
     public function updateSaldo($id, $novoSaldo) {
         try {
             $stmt = $this->db->prepare("UPDATE conta SET conta_saldo = :conta_saldo WHERE conta_id = :conta_id");
-            return $stmt->execute([':conta_saldo' => $novoSaldo, ':conta_id' => $id]);
+            $stmt->execute([':conta_saldo' => $novoSaldo, ':conta_id' => $id]);
+            $retorno = $stmt->rowCount();
+            return $retorno;
         } catch (\Exception $e) {
             throw new \Exception("Erro ao atualizar saldo da conta ID: " . $id . " no banco: " . $e->getMessage());
         }
@@ -42,10 +46,11 @@ class ContaDao implements IContaDao {
     public function createConta($dadosConta) {
         try {
             $stmt = $this->db->prepare("INSERT INTO conta (conta_nome, conta_saldo) VALUES (:conta_nome, :conta_saldo)");
-            return $stmt->execute([
+            $retorno = $stmt->execute([
             ':conta_nome' => $dadosConta['conta_nome'],
             ':conta_saldo' => $dadosConta['conta_saldo']
             ]);
+            return $retorno;
         } catch (\Exception $e) {
             throw new \Exception("Erro ao criar nova conta no banco: " . $e->getMessage());
         }

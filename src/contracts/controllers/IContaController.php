@@ -9,4 +9,8 @@ interface IContaController {
     public function saqueContaAction($valor);
     public function depositoContaAction($valor);
     public function valorTotalContaAction();
+    public function selecionarContaAction();
+    public function criarContaView();
+    public function entrarContaAction();
+    public function listarContasView();
 }

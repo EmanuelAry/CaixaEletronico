@@ -100,4 +100,58 @@ class ContaController implements IContaController {
     public function valorTotalContaAction() {
         return $this->ContaModel->getSaldo();
     }
+
+    public function selecionarContaAction() {
+        $contas = $this->listarContas();
+        $notifications = $this->notifications->getNotifications();
+        // Inclui a view de seleção de conta
+        include __DIR__ . '/../views/contas/selecionarconta.php';
+    }
+
+    public function criarContaView() {
+        include __DIR__ . '/../views/contas/criarconta.php';
+    }
+
+    public function entrarContaAction() {
+        $contaId = $_POST['conta_id'] ?? null;
+        if ($contaId) {
+            $this->alternarConta($contaId);
+            // Redireciona para a tela do caixa eletrônico (ou outra tela) após entrar
+            header('Location: /caixa');
+            exit;
+        } else {
+            $this->notifications->add("ID da conta é obrigatório", "error");
+            header('Location: /');
+            exit;
+        }
+    }
+
+    public function alternarContaAction($id) {
+        $this->alternarConta($id);
+        // Redireciona para a tela do caixa eletrônico (ou outra tela) após entrar
+        header('Location: /caixa');
+        exit;
+    }
+
+    public function criarContaAction() {
+        $contaNome = $_POST['conta_nome'] ?? null;
+        $saldoInicial = $_POST['saldo_inicial'] ?? 0;
+
+        if ($contaNome) {
+            $this->criarConta($contaNome, $saldoInicial);
+            // Redireciona para a tela de seleção de conta após criar
+            header('Location: /');
+            exit;
+        } else {
+            $this->notifications->add("Nome da conta é obrigatório", "error");
+            header('Location: /conta/criarconta.php');
+            exit;
+        }
+    }
+
+    public function listarContasView() {
+        $contas = $this->listarContas();
+        // Inclui a view de seleção de contas, passando $contas para a view
+        include __DIR__ . '/../views/contas/selecionarconta.php';
+    }
 }

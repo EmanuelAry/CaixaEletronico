@@ -35,7 +35,6 @@ class Router {
         $requestPath = parse_url($requestUri, PHP_URL_PATH);
         $requestPath = $this->normalizePath($requestPath);
 
-
         foreach ($this->routes as $route) {
             if ($this->matchRoute($route, $requestMethod, $requestPath)) {
                 $this->executeRoute($route);
@@ -99,7 +98,10 @@ class Router {
             case 'app\\controllers\\ContaController':
                 $contaDao = new \app\dao\ContaDao($this->database);
                 $contaModel = new \app\models\ContaModel(0, '', 0); // Model vazio inicialmente
-                return new $controllerClass($contaModel, $contaDao, $this->logger, $this->notification);
+                $caixaDao = new \app\dao\CaixaEletronicoDao($this->database);
+                $caixaModel = new \app\models\CaixaEletronicoModel($caixaDao);
+                $controllerCaixaEletronico = new \app\controllers\CaixaEletronicoController($caixaModel, $caixaDao, $this->logger, $this->notification);
+                return new $controllerClass($contaModel, $contaDao, $controllerCaixaEletronico, $this->logger, $this->notification);
             
             case 'app\\controllers\\CaixaEletronicoController':
                 $caixaDao = new \app\dao\CaixaEletronicoDao($this->database);
@@ -146,6 +148,12 @@ class Router {
     }
 
     private function normalizePath($path) {
+         // Remove o base path se estiver presente
+        $basePath = '/caixaeletronico/public';
+        if (strpos($path, $basePath) === 0) {
+            $path = substr($path, strlen($basePath));
+        }
+        
         $path = trim($path, '/');
         return $path === '' ? '/' : '/' . $path;
     }
@@ -162,7 +170,15 @@ class Router {
 
     // Métodos auxiliares para definir rotas comuns
     public function setupDefaultRoutes() {
+        //EMANUEL REVISAR ROTAS
+
+        // Pagina inicial
+        $this->addRoute('GET', '/', 'ContaController', 'listarContasView');
+       
         // Rotas para ContaController
+        $this->addRoute('GET', '/conta/criar', 'ContaController', 'criarContaView');
+        $this->addRoute('POST', '/conta/criar', 'ContaController', 'criarConta');
+        $this->addRoute('POST', '/conta/alternar', 'ContaController', 'alternarConta');
         $this->addRoute('GET', '/contas', 'ContaController', 'listarContas');
         $this->addRoute('GET', '/conta/{id}', 'ContaController', 'alternarConta');
         $this->addRoute('POST', '/conta/{id}/saque', 'ContaController', 'realizarSaque');

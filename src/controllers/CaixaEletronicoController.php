@@ -5,6 +5,7 @@ use app\contracts\dao\ICaixaEletronicoDao;
 use app\contracts\core\ILogger;
 use app\contracts\core\INotification;
 use app\contracts\controllers\ICaixaEletronicoController;
+use app\helpers\UrlHelper;
 class CaixaEletronicoController implements ICaixaEletronicoController {
     private $CaixaEletronicoModel;
     private $CaixaEletronicoDao;
@@ -16,6 +17,10 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         $this->CaixaEletronicoDao = $caixaEletronicoDao;
         $this->logger = $logger;
         $this->notification = $notification;
+    }
+
+    public function getCaixaEletronicoModel(){
+        return $this->CaixaEletronicoModel;
     }
 
     public function carregarCaixaEletronicoAction() {
@@ -30,7 +35,8 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
             $this->notification->add('Erro ao carregar o caixa. Tente novamente.', 'error');
             $this->logger->log("Erro ao carregar caixa: " . $e->getMessage());
         }
-        // Redireciona ou exibe a view
+        // Redireciona para view
+        header('Location:'. UrlHelper::baseUrl('caixa/estoqueCaixaView'));
     }
 
     public function descarregarCaixaEletronicoAction() {
@@ -45,7 +51,8 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
             $this->notification->add('Erro ao descarregar o caixa. Tente novamente.', 'error');
             $this->logger->log("Erro ao descarregar caixa: " . $e->getMessage());
         }
-        // Redireciona ou exibe a view
+        // Redireciona para view
+        header('Location:'. UrlHelper::baseUrl('caixa/estoqueCaixaView'));
     }
 
     public function saqueCaixaEletronicoAction($valor) {
@@ -88,12 +95,49 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         return $total;
     }
 
-    // EMANUEL REVISAR POSTERIORMENTE
-    // Método para exibir a view do caixa
-    // public function indexAction() {
-    //     $cedulas = $this->CaixaEletronicoModel->getCedulas();
-    //     $total = $this->CaixaEletronicoModel->getValorTotal();
-    //     // Inclui a view
-    //     include 'views/caixa/index.php';
-    // }
+    public function getQtdTotalCedulas(){
+        $qtdNotas = 0;
+        $estoque = $this->CaixaEletronicoDao->getQtdCadaCedula();
+        $notas = [
+            ['valor' => 200, 'quantidade' => $estoque['200'] ?? 0],
+            ['valor' => 100, 'quantidade' => $estoque['100'] ?? 0],
+            ['valor' => 50,  'quantidade' => $estoque['50']  ?? 0],
+            ['valor' => 20,  'quantidade' => $estoque['20']  ?? 0],
+            ['valor' => 10,  'quantidade' => $estoque['10']  ?? 0],
+            ['valor' => 2,   'quantidade' => $estoque['2']   ?? 0]
+        ];
+        foreach($notas as $nota){
+            $qtdNotas += $nota['quantidade'];
+        }
+        return $qtdNotas;
+    }
+
+    public function getQtdTotalMoedas(){
+        $qtdMoedas = 0;
+        $estoque = $this->CaixaEletronicoDao->getQtdCadaCedula();
+        $moedas = [
+            ['valor' => 1,    'quantidade' => $estoque['1']    ?? 0],
+            ['valor' => 0.50, 'quantidade' => $estoque['0.50'] ?? 0],
+            ['valor' => 0.25, 'quantidade' => $estoque['0.25'] ?? 0],
+            ['valor' => 0.10, 'quantidade' => $estoque['0.10'] ?? 0],
+            ['valor' => 0.05, 'quantidade' => $estoque['0.05'] ?? 0],
+        ];
+        foreach($moedas as $moeda){
+            $qtdMoedas += $moeda['quantidade'];
+        }
+        return $qtdMoedas;
+    }
+
+    public function estoqueCaixaView(){
+        try{
+            $estoque        = $this->CaixaEletronicoDao->getQtdCadaCedula();
+            $valor_total    = $this->valorTotalCaixaEletronicoAction();
+            $total_cedulas  = $this->getQtdTotalCedulas();
+            $total_moedas   = $this->getQtdTotalMoedas();
+            include __DIR__ . '/../views/caixa/estoquecaixa.php';
+        }catch(\Exception $e){
+            $this->notification->add("Erro na busca de estoque", "error");
+            header('Location:'. UrlHelper::baseUrl('conta/selecionar'));
+        }
+    }
 }

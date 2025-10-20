@@ -1,0 +1,1275 @@
+/* =============================================
+   RESET E VARIÁVEIS GLOBAIS
+   ============================================= */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis CSS globais */
+:root {
+    /* Cores principais */
+    --primary-color: #3498db;
+    --primary-dark: #2980b9;
+    --secondary-color: #2c3e50;
+    --accent-color: #1abc9c;
+    --success-color: #27ae60;
+    --success-dark: #219a52;
+    --danger-color: #e74c3c;
+    --danger-dark: #c0392b;
+    --warning-color: #f39c12;
+    
+    /* Cores neutras */
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --gray-light: #e9ecef;
+    --gray: #6c757d;
+    --white: #ffffff;
+    
+    /* Efeitos visuais */
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --transition: all 0.3s ease;
+}
+
+/* =============================================
+   ESTILOS BASE
+   ============================================= */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--dark-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================
+   COMPONENTES DE LAYOUT PRINCIPAIS
+   ============================================= */
+
+/* Header */
+.header {
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.header h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Navegação */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--white);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Conteúdo Principal */
+.main-content {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    flex-grow: 1;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: auto;
+    padding: 1.5rem;
+    color: var(--gray);
+    border-top: 1px solid var(--gray-light);
+}
+
+.footer-content {
+    line-height: 1.4;
+}
+
+.author {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-top: 0.5rem;
+}
+
+/* =============================================
+   COMPONENTES DE TEXTO E TÍTULOS
+   ============================================= */
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--secondary-color);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+/* =============================================
+   COMPONENTES DE FORMULÁRIO
+   ============================================= */
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.875rem;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: var(--white);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Grupo de Input com Prefixo */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gray);
+    font-weight: 600;
+    z-index: 2;
+}
+
+.input-group .form-input {
+    padding-left: 2.5rem;
+}
+
+/* Dicas do Formulário */
+.form-hint {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+/* =============================================
+   COMPONENTES DE BOTÃO
+   ============================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    text-align: center;
+    line-height: 1;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Variantes de Botão */
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background: var(--success-dark);
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: var(--danger-dark);
+}
+
+.btn-warning {
+    background: var(--warning-color);
+    color: var(--white);
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+/* Tamanhos de Botão */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Ícones nos Botões */
+.btn svg {
+    margin-right: 0.5rem;
+}
+
+/* =============================================
+   COMPONENTES DE CARTÃO (CARD)
+   ============================================= */
+
+.card {
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    background: var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+}
+
+.card-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+.card-body {
+    padding: 0;
+}
+
+/* Cartão de Conta Específico */
+.conta-card {
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    background: var(--white);
+    cursor: pointer;
+}
+
+.conta-card:hover {
+    box-shadow: var(--shadow);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.conta-info {
+    margin-bottom: 1rem;
+}
+
+.conta-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* =============================================
+   COMPONENTES DE LISTA
+   ============================================= */
+
+.conta-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.conta-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color);
+}
+
+.conta-item:hover {
+    background-color: var(--gray-light);
+    transform: translateX(5px);
+}
+
+/* =============================================
+   COMPONENTES DE TABELA
+   ============================================= */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.table th {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: var(--light-color);
+}
+
+/* =============================================
+   COMPONENTES DE NOTIFICAÇÃO
+   ============================================= */
+
+.notifications {
+    margin-bottom: 1.5rem;
+}
+
+.notification {
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notification.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-left: 4px solid var(--success-color);
+}
+
+.notification.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-left: 4px solid var(--danger-color);
+}
+
+.notification.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+    border-left: 4px solid var(--warning-color);
+}
+
+.notification.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* =============================================
+   SISTEMA DE GRADE (GRID)
+   ============================================= */
+
+.contas-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.operations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+/* =============================================
+   COMPONENTES ESPECÍFICOS DO SISTEMA
+   ============================================= */
+
+/* Acesso Rápido */
+.quick-access {
+    background: var(--light-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--accent-color);
+}
+
+.quick-access h3 {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+/* Valores Sugeridos */
+.suggested-values {
+    background: var(--light-color);
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--primary-color);
+}
+
+.suggested-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.suggested-value.active {
+    background: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+/* Cabeçalho da Página */
+.page-header {
+    border-bottom: 2px solid var(--gray-light);
+    padding-bottom: 1rem;
+}
+
+/* Informações da Conta Selecionada */
+.conta-selecionada-info {
+    margin-left: auto;
+}
+
+.conta-info-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(10px);
+    min-width: 200px;
+}
+
+.conta-info-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.conta-info-header strong {
+    color: var(--white);
+    font-size: 0.9rem;
+}
+
+.conta-info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.conta-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.conta-info-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.conta-info-value {
+    font-size: 0.85rem;
+    color: var(--white);
+    font-weight: 600;
+}
+
+.conta-info-value.saldo {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* =============================================
+   COMPONENTES DE DEPÓSITO COM CÉDULAS
+   ============================================= */
+
+/* Seletor de Cédulas e Moedas */
+.cedulas-selector {
+    margin-bottom: 1.5rem;
+}
+
+.cedulas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.cedula-group {
+    background: var(--light-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--gray-light);
+}
+
+.cedula-group-title {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.cedula-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cedula-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--white);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.cedula-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cedula-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cedula-value {
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.cedula-desc {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.cedula-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-counter {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--gray-light);
+    background: var(--white);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.btn-counter:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+.btn-counter:disabled {
+    background: var(--gray-light);
+    color: var(--gray);
+    cursor: not-allowed;
+}
+
+.cedula-count {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+}
+
+/* Resumo do Depósito */
+.deposito-resumo {
+    border-top: 1px solid var(--gray-light);
+    padding-top: 1rem;
+}
+
+.resumo-card {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+}
+
+.resumo-title {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.resumo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.resumo-item:last-child {
+    border-bottom: none;
+}
+
+.resumo-item.total {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--success-color);
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--success-color);
+}
+
+/* Ações do Depósito */
+.deposito-actions {
+    border-top: 1px solid var(--gray-light);
+    padding-top: 1.5rem;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+/* Estados do Formulário de Depósito */
+#depositoForm button[type="submit"]:disabled {
+    background: var(--gray);
+    cursor: not-allowed;
+    transform: none;
+}
+
+#depositoForm button[type="submit"]:disabled:hover {
+    background: var(--gray);
+    transform: none;
+    box-shadow: none;
+}
+
+/* =============================================
+   CLASSES UTILITÁRIAS
+   ============================================= */
+
+/* Alinhamento de Texto */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+/* Espaçamento (Margin) */
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+/* Espaçamento (Padding) */
+.p-0 { padding: 0; }
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Flexbox */
+.d-flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+/* Gap */
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+
+/* =============================================
+   ANIMAÇÕES E EFEITOS
+   ============================================= */
+
+/* Animações Suaves */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Estados de Foco Melhorados */
+.form-input:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+}
+
+/* Animações de Pulso */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.cedula-count {
+    transition: all 0.2s ease;
+}
+
+.cedula-count:not([data-value="0"]) {
+    animation: pulse 0.3s ease;
+}
+
+/* Destaque para itens selecionados */
+.cedula-item:has(.cedula-count:not([data-value="0"])) {
+    border-color: var(--success-color);
+    background: rgba(39, 174, 96, 0.05);
+}
+
+/* =============================================
+   RESPONSIVIDADE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .main-content {
+        padding: 1.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.6rem;
+    }
+    
+    /* Grids Responsivos */
+    .contas-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .operations-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .suggested-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Componentes de Conta */
+    .conta-actions {
+        flex-direction: column;
+    }
+    
+    .conta-selecionada-info {
+        margin-left: 0;
+        width: 100%;
+        order: -1;
+    }
+    
+    .conta-info-card {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .header .d-flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    /* Botões Responsivos */
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .quick-actions {
+        width: 100%;
+    }
+    
+    .quick-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Tabelas Responsivas */
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    /* Componentes de Depósito */
+    .cedulas-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .cedula-group {
+        padding: 1rem;
+    }
+    
+    .cedula-item {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+    
+    .cedula-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .resumo-content {
+        gap: 0.5rem;
+    }
+    
+    .resumo-item {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+    
+    /* Cabeçalho da Página */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =============================================
+   ESTILOS DE FORMULÁRIOS DE OPERAÇÃO
+   ============================================= */
+
+.operation-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.operation-form .form-group {
+    flex-grow: 1;
+}
+/* =============================================
+   COMPONENTES DE SWITCHER DE REGRAS
+   ============================================= */
+
+.regra-switcher {
+    margin-bottom: 1rem;
+}
+
+.switcher-container {
+    position: relative;
+    display: inline-flex;
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--gray-light);
+    padding: 0.25rem;
+    gap: 0.25rem;
+}
+
+.switcher-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switcher-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    color: var(--gray);
+    z-index: 1;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.switcher-input:checked + .switcher-option {
+    color: var(--white);
+}
+
+.switcher-input:focus + .switcher-option {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.switcher-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.switcher-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.switcher-slider {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    height: calc(100% - 0.5rem);
+    width: calc(50% - 0.25rem);
+    background: var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+
+/* Posição do slider para regra alternativa */
+#regra_alternativa:checked ~ .switcher-slider {
+    transform: translateX(100%);
+}
+
+/* Cores específicas para cada opção quando selecionada */
+#regra_padrao:checked + .switcher-option {
+    color: var(--white);
+}
+
+#regra_alternativa:checked + .switcher-option {
+    color: var(--white);
+}
+
+/* =============================================
+   DESCRIÇÕES DAS REGRAS
+   ============================================= */
+
+.regra-descricoes {
+    margin-top: 1rem;
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.regra-descricao {
+    animation: fadeIn 0.3s ease;
+}
+
+.descricao-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.descricao-text {
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================
+   INFORMAÇÕES ADICIONAIS DO SAQUE
+   ============================================= */
+
+.saque-info {
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid rgba(243, 156, 18, 0.2);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--warning-color);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.info-item svg {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* =============================================
+   ESTADOS DE FOCO E HOVER
+   ============================================= */
+
+.switcher-option:hover {
+    color: var(--primary-color);
+}
+
+.switcher-input:checked + .switcher-option:hover {
+    color: var(--white);
+}
+
+/* =============================================
+   RESPONSIVIDADE DO SWITCHER
+   ============================================= */
+
+@media (max-width: 768px) {
+    .switcher-container {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .switcher-option {
+        flex: 1;
+        min-width: auto;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .switcher-slider {
+        width: calc(50% - 0.25rem);
+    }
+    
+    .switcher-text {
+        font-size: 0.85rem;
+    }
+    
+    .regra-descricoes {
+        padding: 0.75rem;
+    }
+    
+    .descricao-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* =============================================
+   ANIMAÇÕES ADICIONAIS
+   ============================================= */
+
+.switcher-slider {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.switcher-container {
+    transition: border-color 0.3s ease;
+}
+
+.switcher-container:focus-within {
+    border-color: var(--primary-color);
+}
+
+/* Efeito de pulso para indicador de mudança */
+@keyframes pulse-gentle {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.switcher-input:checked + .switcher-option {
+    animation: pulse-gentle 0.3s ease;
+}

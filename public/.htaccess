@@ -10,6 +10,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # ...redireciona tudo para o index.php
 RewriteRule ^(.*)$ index.php [QSA,L]
 
+# Permite acesso direto a arquivos na pasta assets
+RewriteRule ^assets/ - [L]
+
 # Opcional: Força HTTPS (se necessário)
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

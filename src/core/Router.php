@@ -174,11 +174,17 @@ class Router {
 
         // Pagina inicial
         $this->addRoute('GET', '/', 'ContaController', 'listarContasView');
-       
+        
         // Rotas para ContaController
+        $this->addRoute('GET', '/conta/selecionar', 'ContaController', 'listarContasView');
+        $this->addRoute('GET', '/conta/menuCaixaView', 'ContaController', 'menuCaixaView');
+        $this->addRoute('POST', '/conta/alternarContaAction', 'ContaController', 'alternarContaAction');
+        $this->addRoute('GET', '/conta/alternarContaAction', 'ContaController', 'alternarContaAction');
+        $this->addRoute('POST', '/conta/criarContaAction', 'ContaController', 'criarContaAction');
+        $this->addRoute('GET', '/conta/deposito', 'ContaController', 'depositoContaAction');
+        $this->addRoute('POST', '/conta/deposito', 'ContaController', 'depositoContaAction');
+
         $this->addRoute('GET', '/conta/criar', 'ContaController', 'criarContaView');
-        $this->addRoute('POST', '/conta/criar', 'ContaController', 'criarConta');
-        $this->addRoute('POST', '/conta/alternar', 'ContaController', 'alternarConta');
         $this->addRoute('GET', '/contas', 'ContaController', 'listarContas');
         $this->addRoute('GET', '/conta/{id}', 'ContaController', 'alternarConta');
         $this->addRoute('POST', '/conta/{id}/saque', 'ContaController', 'realizarSaque');
@@ -186,7 +192,11 @@ class Router {
         $this->addRoute('POST', '/conta', 'ContaController', 'criarConta');
 
         // Rotas para CaixaEletronicoController
-        $this->addRoute('GET', '/saldo', 'CaixaEletronicoController', 'verSaldo');
-        $this->addRoute('GET', '/extrato', 'CaixaEletronicoController', 'verExtrato');
+        $this->addRoute('GET', '/caixa/estoqueCaixaView', 'CaixaEletronicoController', 'estoqueCaixaView');
+        $this->addRoute('POST', '/caixa/estoqueCaixaView', 'CaixaEletronicoController', 'estoqueCaixaView');
+        $this->addRoute('GET', 'caixa/carregar', 'CaixaEletronicoController', 'carregarCaixaEletronicoAction');
+        $this->addRoute('POST', 'caixa/carregar', 'CaixaEletronicoController', 'carregarCaixaEletronicoAction');
+        $this->addRoute('GET', 'caixa/descarregar', 'CaixaEletronicoController', 'descarregarCaixaEletronicoAction');
+        $this->addRoute('POST', 'caixa/descarregar', 'CaixaEletronicoController', 'descarregarCaixaEletronicoAction');
     }
 }

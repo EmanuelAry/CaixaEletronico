@@ -55,4 +55,8 @@ class ContaDao implements IContaDao {
             throw new \Exception("Erro ao criar nova conta no banco: " . $e->getMessage());
         }
     }
+
+    public function getIdUltimoRegistroInserido(){
+        return $this->db->laslastInsertId();
+    }
 }

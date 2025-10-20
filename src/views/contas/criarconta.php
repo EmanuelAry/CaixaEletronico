@@ -1,23 +1,24 @@
-<?php include __DIR__ . '/../templates/header.php'; ?>
+<?php   
+use app\helpers\UrlHelper;
+include __DIR__ . '/../templates/header.php'; 
+?>
 
-<h1>Criar Nova Conta</h1>
+<h1 class="page-title">Criar Nova Conta</h1>
 
 <?php include __DIR__ . '/../templates/notifications.php'; ?>
 
-<form method="POST" action="/conta">
+<form method="POST" action="<?php echo UrlHelper::baseUrl('/conta/criarContaAction'); ?>">
     <div>
-        <label for="conta_nome">Nome da Conta:</label>
-        <input type="text" id="conta_nome" name="conta_nome" required>
+        <label class="form-label" for="conta_nome">Nome da Conta:</label>
+        <input class="form-input" type="text" id="conta_nome" name="conta_nome" required>
     </div>
     <div>
-        <label for="saldo_inicial">Saldo Inicial (R$):</label>
-        <input type="number" id="saldo_inicial" name="saldo_inicial" step="0.01" min="0" value="0.00" required>
+        <label class="form-label" for="saldo_inicial">Saldo Inicial (R$):</label>
+        <input class="form-input" type="number" id="saldo_inicial" name="saldo_inicial" step="0.01" min="0" value="0.00" required>
     </div>
-    <button type="submit">Criar Conta</button>
+    <div style="float: right; margin-top: 1rem">
+        <button class="btn btn-primary" type="submit">Criar Conta</button>
+    </div>
 </form>
-
-<div>
-    <a href="/">Voltar para a seleção de contas</a>
-</div>
 
 <?php include __DIR__ . '/../templates/footer.php'; ?>

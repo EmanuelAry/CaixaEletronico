@@ -16,7 +16,7 @@ include __DIR__ . '/../templates/header.php';
             <h2 class="card-title">Saque</h2>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?= UrlHelper::baseUrl('conta/saque') ?>" class="operation-form" id="saqueForm">
+            <form method="POST" action="<?= UrlHelper::baseUrl('conta/saque/?XDEBUG_SESSION=VSCODE') ?>" class="operation-form" id="saqueForm">
                 <input hidden name="conta_id" type="number" value="<?= $contaSelecionada['conta_id'] ?>"></input>
                 <div class="form-group">
                     <label for="valor_saque" class="form-label">Valor do Saque (R$)</label>

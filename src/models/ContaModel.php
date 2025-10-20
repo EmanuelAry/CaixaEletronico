@@ -19,7 +19,7 @@ class ContaModel implements IContaModel {
     }
 
     public function setSaldo($saldo) {
-        $this->saldo = $saldo;
+        $this->saldo = (float) round($saldo, 2);
     }
 
     public function setContaNome($conta_nome) {
@@ -49,7 +49,7 @@ class ContaModel implements IContaModel {
     }
 
     public function DepositoConta($valor) {
-        $this->saldo += $valor;
+        $this->saldo += (float) round($valor, 2);
     }
 
     public function isSaquePermitidoConta($valor) {

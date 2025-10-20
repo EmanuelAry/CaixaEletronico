@@ -183,6 +183,8 @@ class Router {
         $this->addRoute('POST', '/conta/criarContaAction', 'ContaController', 'criarContaAction');
         $this->addRoute('GET', '/conta/deposito', 'ContaController', 'depositoContaAction');
         $this->addRoute('POST', '/conta/deposito', 'ContaController', 'depositoContaAction');
+        $this->addRoute('GET', '/conta/saque', 'ContaController', 'depositoContaAction');
+        $this->addRoute('POST', '/conta/saque', 'ContaController', 'depositoContaAction');
 
         $this->addRoute('GET', '/conta/criar', 'ContaController', 'criarContaView');
         $this->addRoute('GET', '/contas', 'ContaController', 'listarContas');

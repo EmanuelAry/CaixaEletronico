@@ -112,9 +112,9 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
         //EMANUEL NECESSÁRIO REALIZAR REVISÃO DE REGRA
         $total = 0;
         foreach ($cedulas as $denominacao => $quantidade) {
-            $total += $denominacao * $quantidade;
+            $total += (float)$denominacao * $quantidade;
         }
-        return $total;
+        return round($total, 2);
     }
 }
 ?>

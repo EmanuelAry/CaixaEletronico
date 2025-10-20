@@ -124,7 +124,7 @@ class ContaController implements IContaController {
             $this->notifications->add("Erro ao realizar depósito", "error");
         }
         header('Location:'. UrlHelper::baseUrl('conta/menuCaixaView'));
-    }
+    }  
 
     public function valorTotalContaAction() {
         return $this->ContaModel->getSaldo();

@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (notification.parentNode) {
                     notification.parentNode.removeChild(notification);
                 }
-            }, 300);
+            }, 600);
         }, 5000);
     });
 

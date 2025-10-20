@@ -16,7 +16,8 @@ class Notification implements INotification {
     public function add($message, $type = 'success') {
         $_SESSION['notifications'][] = [
             'message' => $message,
-            'type' => $type
+            'type' => $type,
+            'status' => 1
         ];
     }
 

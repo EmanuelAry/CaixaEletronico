@@ -325,3 +325,4 @@
 [2025-10-21 17:54:07] [INFO] Conta alternada para ID: 6
 [2025-10-21 17:54:15] [INFO] Tentativa de saque na conta ID: 6 no valor de R$ 123.50 falhou: saldo insuficiente.
 [2025-10-21 17:54:33] [INFO] Tentativa de saque na conta ID: 6 no valor de R$ 123.01 falhou: saldo insuficiente.
+[2025-10-21 18:22:53] [INFO] Conta alternada para ID: 2

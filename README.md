@@ -129,95 +129,13 @@ http://localhost/caixaeletronico/public/
 ```
 ## 🖥️ Telas do Sistema
 1. Tela de Seleção de Conta
-![Texto alternativo para a imagem](/telas/selecao_conta.png)
-Interface para selecionar conta existente ou criar nova conta
+![Interface para selecionar conta existente ou criar nova conta](/telas/selecao_conta.png)
 
-Tela de Criação de Conta
-https://screenshots/criacao-conta.png
-Formulário para criação de novas contas bancárias
+2. Tela de Criação de Conta
+![Formulário para criação de novas contas bancárias](/telas/criar_conta.png)
 
-Tela de Operações
-https://screenshots/operacoes.png
-Interface para realização de saques, depósitos e consultas
+3. Tela de Operações
+![Interface para realização de saques, depósitos e consultas](/telas/operacoes_conta.png)
 
-Tela de Gestão do Caixa
-https://screenshots/gestao-caixa.png
-Painel administrativo para controle de cédulas e moedas
-
-🔧 Configuração
-Estratégias de Saque
-O sistema permite alternar entre estratégias:
-
-php
-// No ContratoModel
-const ESTATEGIA_PADRAO = 0;      // Menor quantidade de cédulas
-const ESTATEGIA_ALTERNATIVA = 1; // Preserva cédulas grandes
-
-// Para alterar a estratégia
-$model->setEstrategia(ContratoModel::ESTATEGIA_ALTERNATIVA);
-Denominações Suportadas
-php
-$cedula = [
-    200 => 0,   // R$200
-    100 => 0,   // R$100
-    50 => 0,    // R$50
-    20 => 0,    // R$20
-    10 => 0,    // R$10
-    5 => 0,     // R$5
-    2 => 0,     // R$2
-    1 => 0,     // R$1
-    0.50 => 0,  // R$0.50
-    0.25 => 0,  // R$0.25
-    0.10 => 0,  // R$0.10
-    0.05 => 0   // R$0.05
-];
-📝 Exemplo de Uso
-Realizando um Saque
-php
-// O sistema automaticamente usa a estratégia configurada
-$cedulasParaSaque = $caixaModel->getCedulasParaSaque(150);
-
-// Retorna: [100 => 1, 50 => 1]
-Registro de Notificações
-php
-// Adiciona notificação
-$notification->add('Saque realizado com sucesso', 'success');
-
-// Exibe notificações
-$notifications = $notification->getNotifications();
-🧪 Testes
-O sistema inclui validações robustas:
-
-✅ Validação de saldo suficiente
-
-✅ Composição possível de cédulas
-
-✅ Valores não negativos
-
-✅ Denominações válidas
-
-👥 Desenvolvimento
-Práticas Implementadas
-Código limpo com nomes descritivos
-
-Comentários explicativos onde necessário
-
-Tratamento de erros comprehensive
-
-Validações de entrada de dados
-
-Segurança contra valores negativos e invasões
-
-Padrões de Projeto
-Strategy Pattern para estratégias de saque
-
-Dependency Injection para inversão de controle
-
-MVC para separação de concerns
-
-DAO para abstração de dados
-
-📞 Suporte
-Para dúvidas ou issues, abra uma issue no repositório do projeto.
-
-Desenvolvido como teste técnico - Demonstrando habilidades em PHP OO, arquitetura de software e princípios SOLID.
+4. Tela de Gestão Estoque do Caixa
+![Painel administrativo para controle de cédulas e moedas](/telas/estoque_caixa.png)

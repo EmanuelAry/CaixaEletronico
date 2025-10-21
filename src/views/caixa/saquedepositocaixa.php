@@ -17,7 +17,12 @@ include __DIR__ . '/../templates/header.php';
         </div>
         <div class="card-body">
             <form method="POST" action="<?= UrlHelper::baseUrl('conta/saque/?XDEBUG_SESSION=VSCODE') ?>" class="operation-form" id="saqueForm">
-                <input hidden name="conta_id" type="number" value="<?= $contaSelecionada['conta_id'] ?>"></input>
+                <input 
+                    type="hidden" 
+                    id="conta_id" 
+                    name="conta_id" 
+                    value="<?= $contaSelecionada['conta_id'] ?>"
+                >
                 <div class="form-group">
                     <label for="valor_saque" class="form-label">Valor do Saque (R$)</label>
                     <div class="input-group">
@@ -28,7 +33,7 @@ include __DIR__ . '/../templates/header.php';
                             name="valor_saque" 
                             class="form-input" 
                             step="0.01" 
-                            min="0.01" 
+                            min="0.05" 
                             placeholder="0,00" 
                             required
                         >
@@ -41,12 +46,12 @@ include __DIR__ . '/../templates/header.php';
                     <label class="form-label">Regra de Saque</label>
                     <div class="regra-switcher">
                         <div class="switcher-container">
-                            <input type="radio" id="regra_padrao" name="regra_saque" value="padrao" class="switcher-input" checked>
+                            <input type="radio" id="regra_padrao" name="regra_saque" value=0 class="switcher-input" checked>
                             <label for="regra_padrao" class="switcher-option">
                                 <span class="switcher-text">Regra Padrão</span>
                             </label>
                             
-                            <input type="radio" id="regra_alternativa" name="regra_saque" value="alternativa" class="switcher-input">
+                            <input type="radio" id="regra_alternativa" name="regra_saque" value=1 class="switcher-input">
                             <label for="regra_alternativa" class="switcher-option">
                                 <span class="switcher-text">Regra Alternativa</span>
                             </label>
@@ -105,7 +110,13 @@ include __DIR__ . '/../templates/header.php';
         <div class="card-body">
             <form method="POST" action="<?= UrlHelper::baseUrl('conta/deposito/?XDEBUG_SESSION=VSCODE') ?>" class="operation-form" id="depositoForm">
                 <div class="form-group">
-                    <input hidden name="conta_id" type="number" value="<?= $contaSelecionada['conta_id'] ?>"></input>
+                    <input 
+                        type="hidden" 
+                        id="conta_id" 
+                        name="conta_id" 
+                        type="number" 
+                        value="<?= $contaSelecionada['conta_id'] ?>"
+                    >
                     <input type="hidden" name="cedulas" id="cedulasInput">
                     <label for="valor_deposito" class="form-label">Valor do Depósito (R$)</label>
                     <div class="input-group">
@@ -283,148 +294,44 @@ include __DIR__ . '/../templates/header.php';
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Switcher de Regras
+    // 1. Switcher de Regras
+    initRegraSwitcher();
+    
+    // 2. Sistema de Valores Sugeridos (unificado)
+    initSuggestedValues();
+    
+    // 3. Sistema de Depósito
+    initDepositoSystem();
+    
+    // 4. Formatação Monetária Global
+    initMoneyFormatting();
+});
+
+// FUNÇÕES MODULARIZADAS
+function initRegraSwitcher() {
     const regraInputs = document.querySelectorAll('.switcher-input');
     const descricaoPadrao = document.getElementById('descricao_padrao');
     const descricaoAlternativa = document.getElementById('descricao_alternativa');
     
     regraInputs.forEach(input => {
         input.addEventListener('change', function() {
-            if (this.id === 'regra_padrao' && this.checked) {
-                descricaoPadrao.style.display = 'block';
-                descricaoAlternativa.style.display = 'none';
-            } else if (this.id === 'regra_alternativa' && this.checked) {
-                descricaoPadrao.style.display = 'none';
-                descricaoAlternativa.style.display = 'block';
-            }
+            const showPadrao = this.id === 'regra_padrao' && this.checked;
+            descricaoPadrao.style.display = showPadrao ? 'block' : 'none';
+            descricaoAlternativa.style.display = showPadrao ? 'none' : 'block';
         });
     });
-    
-    // Valores Sugeridos
-    const suggestedButtons = document.querySelectorAll('.suggested-value');
-    const valorSaqueInput = document.getElementById('valor_saque');
-    
-    suggestedButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const value = this.getAttribute('data-value');
-            valorSaqueInput.value = value;
-            valorSaqueInput.focus();
-        });
-    });
-    
-    // Formatação do input de valor
-    valorSaqueInput.addEventListener('blur', function() {
-        if (this.value) {
-            this.value = parseFloat(this.value).toFixed(2);
-        }
-    });
-});
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    const valorDepositoInput = document.getElementById('valor_deposito');
-    const cedulaCounts = document.querySelectorAll('.cedula-count');
-    const btnCountersPlus = document.querySelectorAll('.btn-counter-plus');
-    const btnCountersMinus = document.querySelectorAll('.btn-counter-minus');
-    const btnLimpar = document.getElementById('limpar-deposito');
-    const totalCedulasSpan = document.getElementById('total-cedulas');
-    const totalMoedasSpan = document.getElementById('total-moedas');
-    
-    // Valores das cédulas e moedas
-    const valores = {
-        '200': 200,
-        '100': 100,
-        '50': 50,
-        '20': 20,
-        '10': 10,
-        '2': 2,
-        '1': 1,
-        '0.5': 0.5,
-        '0.25': 0.25,
-        '0.1': 0.1,
-        '0.05': 0.05
-    };
-    
-    // Função para atualizar o valor total
-    function atualizarValorTotal() {
-        let total = 0;
-        let totalCedulas = 0;
-        let totalMoedas = 0;
-        
-        cedulaCounts.forEach(countElement => {
-            const valor = parseFloat(countElement.getAttribute('data-value'));
-            const quantidade = parseInt(countElement.textContent);
-            
-            if (!isNaN(quantidade) && quantidade > 0) {
-                const subtotal = valor * quantidade;
-                total += subtotal;
-                
-                // Classificar como cédula ou moeda
-                if (valor >= 2) {
-                    totalCedulas += quantidade;
-                } else {
-                    totalMoedas += quantidade;
-                }
-            }
-        });
-        
-        // Atualizar os campos
-        valorDepositoInput.value = total.toFixed(2);
-        
-        // Validar o formulário
-        const submitBtn = document.querySelector('#depositoForm button[type="submit"]');
-        if (total > 0) {
-            submitBtn.disabled = false;
-        } else {
-            submitBtn.disabled = true;
-        }
-    }
-    
-    // Event listeners para os botões de incremento
-    btnCountersPlus.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const valor = this.getAttribute('data-value');
-            const countElement = document.querySelector(`.cedula-count[data-value="${valor}"]`);
-            let count = parseInt(countElement.textContent);
-            countElement.textContent = count + 1;
-            atualizarValorTotal();
-        });
-    });
-    
-    // Event listeners para os botões de decremento
-    btnCountersMinus.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const valor = this.getAttribute('data-value');
-            const countElement = document.querySelector(`.cedula-count[data-value="${valor}"]`);
-            let count = parseInt(countElement.textContent);
-            if (count > 0) {
-                countElement.textContent = count - 1;
-                atualizarValorTotal();
-            }
-        });
-    });
-    
-    // Event listener para o botão limpar
-    btnLimpar.addEventListener('click', function() {
-        cedulaCounts.forEach(countElement => {
-            countElement.textContent = '0';
-        });
-        atualizarValorTotal();
-    });
-    
-    // Inicializar o estado do formulário
-    atualizarValorTotal();
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para os botões de valores sugeridos
+function initSuggestedValues() {
     const suggestedButtons = document.querySelectorAll('.suggested-value');
     
     suggestedButtons.forEach(button => {
         button.addEventListener('click', function() {
-            debugger;
+            // REMOVIDO: debugger; // Remove para produção
             const value = this.getAttribute('data-value');
             const form = this.closest('.operation-form');
-            const input = form.querySelector('input[type="number"]');
+            const input = form?.querySelector('input[type="number"]') || 
+                         document.getElementById('valor_saque');
             
             if (input) {
                 input.value = value;
@@ -432,50 +339,117 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+}
+
+function initDepositoSystem() {
+    const valorDepositoInput = document.getElementById('valor_deposito');
+    if (!valorDepositoInput) return; // Safety check
     
-    // Formatação automática dos inputs monetários
+    const cedulaCounts = document.querySelectorAll('.cedula-count');
+    const btnCountersPlus = document.querySelectorAll('.btn-counter-plus');
+    const btnCountersMinus = document.querySelectorAll('.btn-counter-minus');
+    const btnLimpar = document.getElementById('limpar-deposito');
+    const depositoForm = document.getElementById('depositoForm');
+    
+    // Event listeners para contadores
+    btnCountersPlus.forEach(btn => {
+        btn.addEventListener('click', () => handleCounterChange(btn, 1));
+    });
+    
+    btnCountersMinus.forEach(btn => {
+        btn.addEventListener('click', () => handleCounterChange(btn, -1));
+    });
+    
+    // Botão limpar
+    btnLimpar?.addEventListener('click', limparDeposito);
+    
+    // Submit handler
+    depositoForm?.addEventListener('submit', handleDepositoSubmit);
+    
+    // Inicializar
+    atualizarValorTotal();
+}
+
+function initMoneyFormatting() {
     const moneyInputs = document.querySelectorAll('input[type="number"]');
     
     moneyInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (this.value) {
-                this.value = parseFloat(this.value).toFixed(2);
-            }
-        });
-        
-        input.addEventListener('input', function() {
-            // Garante que o valor seja positivo
-            if (parseFloat(this.value) < 0) {
-                this.value = Math.abs(parseFloat(this.value));
-            }
-        });
+        input.addEventListener('blur', formatMoneyInput);
+        input.addEventListener('input', ensurePositiveValue);
     });
+}
 
-    document.getElementById('depositoForm').addEventListener('submit', function(e) {
-        debugger;
-        e.preventDefault();
-        
-        // Coletar as quantidades de cada cédula/moeda
-        const cedulasData = {};
-        const cedulaCounts = document.querySelectorAll('.cedula-count');
-        
-        cedulaCounts.forEach(countElement => {
-            const valor = countElement.getAttribute('data-value');
-            const quantidade = parseInt(countElement.textContent);
-            
-            if (quantidade > 0) {
-                cedulasData["'" + valor.toString() + "'"] = quantidade;
-            }
-        });
-        
-        // Atualizar o campo hidden com os dados das cédulas
-        document.getElementById('cedulasInput').value = JSON.stringify(cedulasData);
-        
-        // Agora enviar o formulário
-        this.submit();
+// FUNÇÕES AUXILIARES
+function handleCounterChange(button, change) {
+    const valor = button.getAttribute('data-value');
+    const countElement = document.querySelector(`.cedula-count[data-value="${valor}"]`);
+    let count = parseInt(countElement.textContent);
+    
+    const newCount = count + change;
+    if (newCount >= 0) {
+        countElement.textContent = newCount;
+        atualizarValorTotal();
+    }
+}
+
+function limparDeposito() {
+    document.querySelectorAll('.cedula-count').forEach(countElement => {
+        countElement.textContent = '0';
     });
+    atualizarValorTotal();
+}
 
-});
+function handleDepositoSubmit(e) {
+    e.preventDefault();
+    // REMOVIDO: debugger;
+    
+    const cedulasData = {};
+    document.querySelectorAll('.cedula-count').forEach(countElement => {
+        const valor = countElement.getAttribute('data-value');
+        const quantidade = parseInt(countElement.textContent);
+        
+        if (quantidade > 0) {
+            cedulasData[valor] = quantidade; // CORRIGIDO: removido aspas extras
+        }
+    });
+    
+    document.getElementById('cedulasInput').value = JSON.stringify(cedulasData);
+    this.submit();
+}
+
+function formatMoneyInput() {
+    if (this.value) {
+        this.value = Math.max(0, parseFloat(this.value) || 0).toFixed(2);
+    }
+}
+
+function ensurePositiveValue() {
+    if (parseFloat(this.value) < 0) {
+        this.value = Math.abs(parseFloat(this.value)) || 0;
+    }
+}
+
+function atualizarValorTotal() {
+    const valorDepositoInput = document.getElementById('valor_deposito');
+    const cedulaCounts = document.querySelectorAll('.cedula-count');
+    const submitBtn = document.querySelector('#depositoForm button[type="submit"]');
+    
+    if (!valorDepositoInput || !submitBtn) return;
+    
+    let total = 0;
+    
+    cedulaCounts.forEach(countElement => {
+        const valor = parseFloat(countElement.getAttribute('data-value'));
+        const quantidade = parseInt(countElement.textContent);
+        
+        if (!isNaN(quantidade) && quantidade > 0) {
+            total += valor * quantidade;
+        }
+    });
+    
+    valorDepositoInput.value = total.toFixed(2);
+    submitBtn.disabled = total <= 0;
+}
 </script>
 
 <?php include __DIR__ . '/../templates/footer.php'; ?>

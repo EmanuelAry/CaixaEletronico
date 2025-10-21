@@ -14,6 +14,7 @@ interface ICaixaEletronicoModel {
     public function calcularCarregamento($qtdNotas = 10);
     public function calcularDescarregamento();
     public function getCedulasParaSaque($valor);
+    public function calcularCedulasRestantes($qtdCedulaTotal, $qtdCedulaSaque);
     public function calculaRemocaoCedulasSaque($cedulasSaque);
     public function calculaDepositoCaixa($cedulasDepositadas);
     public function getValorTotal();

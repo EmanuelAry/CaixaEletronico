@@ -69,20 +69,21 @@ class ContaController implements IContaController {
     }
 
     public function saqueContaAction(){
-        if(isset($_POST['valor'])){
-            $valor = $_POST['valor'] ?? null;
-        }else if(isset($_GET['valor'])){
-            $valor = $_GET['valor'] ?? null;
-        }else{
-            $valor = null;
-        }
+        $regra          = $_POST['regra_saque'] ?? null;// 0 = padrao; 1 = alternativa;
+        $valor_saque    = $_POST['valor_saque'] ?? null;
+        $conta_id       = $_POST['conta_id'] ?? null;
+        $valor          = (float) round($valor_saque, 2);
         try {
+            $conta = $this->ContaDao->getContaById($conta_id);
+            $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo']);
+            $_SESSION['conta_id'] = $conta['conta_id'];
             if (!$this->ContaModel->isSaquePermitidoConta($valor)) {
                 $this->notifications->add("Saldo insuficiente na conta ID: " . $this->ContaModel->getId() . " para saque de R$ " . number_format($valor, 2), "error");
                 $this->logger->log("Tentativa de saque na conta ID: " . $this->ContaModel->getId() . " no valor de R$ " . number_format($valor, 2) . " falhou: saldo insuficiente.");
+                header('Location:'. UrlHelper::baseUrl('conta/menuCaixaView'));
                 return;
             }
-            $this->CaixaEletronicoController->saqueCaixaEletronicoAction($valor);
+            $this->CaixaEletronicoController->saqueCaixaEletronicoAction($valor, $regra);
             $this->ContaModel->SaqueConta($valor);
             $novoSaldo = $this->ContaModel->getSaldo();
             $this->ContaDao->updateSaldo($this->ContaModel->getId(), $novoSaldo);
@@ -90,8 +91,9 @@ class ContaController implements IContaController {
             $this->logger->log("Saque de R$ " . number_format($valor, 2) . " na conta ID:" . $this->ContaModel->getId() . " realizado com sucesso.");
         } catch (\Exception $e) {
             $this->logger->log("Erro durante saque na conta ID:" . $this->ContaModel->getId() . ": " . $e->getMessage());
-            $this->notifications->add("Erro ao realizar saque", "error");
+            $this->notifications->add("Erro ao realizar saque:". $e->getMessage(), "error");
         }
+        header('Location:'. UrlHelper::baseUrl('conta/menuCaixaView'));
     }
 
     public function depositoContaAction(){

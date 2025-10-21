@@ -55,7 +55,8 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         header('Location:'. UrlHelper::baseUrl('caixa/estoqueCaixaView'));
     }
 
-    public function saqueCaixaEletronicoAction($valor) {
+    public function saqueCaixaEletronicoAction($valor, $regra = 0) {
+        $this->CaixaEletronicoModel->setEstrategia($regra);
         $valorTotalCaixa = $this->CaixaEletronicoModel->getValorTotal();
         if ($valor <= 0) {
             $this->notification->add('Erro ao realizar o saque. Valor deve ser positivo.', 'error');

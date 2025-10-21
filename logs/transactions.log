@@ -130,3 +130,162 @@
 [2025-10-20 22:57:55] [INFO] Conta alternada para ID: 7
 [2025-10-20 22:58:06] [INFO] Deposito de R$ 0.40 realizado com sucesso no caixa.
 [2025-10-20 22:58:06] [INFO] Depósito de R$ 0.40 na conta ID:7 realizado com sucesso.
+[2025-10-20 23:24:54] [INFO] Deposito de R$ 0.00 realizado com sucesso no caixa.
+[2025-10-20 23:24:54] [INFO] Depósito de R$ 0.00 na conta ID: realizado com sucesso.
+[2025-10-20 23:25:21] [INFO] Deposito de R$ 0.00 realizado com sucesso no caixa.
+[2025-10-20 23:25:21] [INFO] Depósito de R$ 0.00 na conta ID: realizado com sucesso.
+[2025-10-20 23:25:51] [INFO] Conta alternada para ID: 2
+[2025-10-20 23:26:01] [INFO] Deposito de R$ 0.00 realizado com sucesso no caixa.
+[2025-10-20 23:26:01] [INFO] Depósito de R$ 0.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:29:37] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-20 23:29:37] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:29:49] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-20 23:29:49] [INFO] Depósito de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:32:20] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-20 23:33:45] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:33:54] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-20 23:33:54] [INFO] Depósito de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:36:36] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-20 23:36:45] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:37:58] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-20 23:37:58] [INFO] Depósito de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:38:06] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-20 23:38:06] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:46:41] [INFO] Tentativa de saque na conta ID: 2 no valor de R$ 100.00 falhou: saldo insuficiente.
+[2025-10-20 23:48:14] [INFO] Tentativa de saque na conta ID: 2 no valor de R$ 100.00 falhou: saldo insuficiente.
+[2025-10-20 23:50:45] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-20 23:50:45] [INFO] Depósito de R$ 200.00 na conta ID:2 realizado com sucesso.
+[2025-10-20 23:55:34] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-20 23:55:34] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 00:27:36] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 00:27:41] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 00:28:07] [INFO] Deposito de R$ 400.00 realizado com sucesso no caixa.
+[2025-10-21 00:28:07] [INFO] Depósito de R$ 400.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 00:28:28] [INFO] Tentativa de saque na conta ID:  no valor de R$ 100.00 falhou: saldo insuficiente.
+[2025-10-21 00:29:09] [INFO] Conta alternada para ID: 2
+[2025-10-21 00:29:25] [INFO] Tentativa de saque na conta ID:  no valor de R$ 100.00 falhou: saldo insuficiente.
+[2025-10-21 00:29:36] [INFO] Conta alternada para ID: 2
+[2025-10-21 00:30:17] [INFO] Tentativa de saque na conta ID:  no valor de R$ 50.00 falhou: saldo insuficiente.
+[2025-10-21 00:30:19] [INFO] Conta alternada para ID: 2
+[2025-10-21 00:51:20] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado você pode sacar: R$100
+[2025-10-21 00:52:06] [INFO] Conta alternada para ID: 2
+[2025-10-21 00:52:27] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 00:52:27] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 01:02:33] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 01:02:33] [INFO] Saque de R$ 100.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 01:03:10] [INFO] Conta alternada para ID: 2
+[2025-10-21 01:03:22] [INFO] Tentativa de saque de R$ 200 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:03:22] [INFO] Erro durante saque na conta ID:2: Saldo insuficiente no caixa.
+[2025-10-21 01:03:34] [INFO] Tentativa de saque de R$ 200 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:03:34] [INFO] Erro durante saque na conta ID:2: Saldo insuficiente no caixa.
+[2025-10-21 01:04:08] [INFO] Deposito de R$ 400.00 realizado com sucesso no caixa.
+[2025-10-21 01:04:08] [INFO] Depósito de R$ 400.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 01:04:28] [INFO] Conta alternada para ID: 2
+[2025-10-21 01:04:48] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado você pode sacar: R$100
+[2025-10-21 01:04:54] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado você pode sacar: R$100
+[2025-10-21 01:13:17] [INFO] Conta alternada para ID: 2
+[2025-10-21 01:13:25] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado você pode sacar: R$100
+[2025-10-21 01:13:36] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado preservando cédulas de alto valor. Sugerimos tentar R$ 100,00?
+[2025-10-21 01:13:46] [INFO] Erro durante saque na conta ID:2: Não foi possível compor o valor solicitado preservando cédulas de alto valor. Sugerimos tentar R$ 100,00?
+[2025-10-21 01:14:47] [INFO] Conta alternada para ID: 7
+[2025-10-21 01:15:08] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 01:15:08] [INFO] Saque de R$ 100.00 na conta ID:7 realizado com sucesso.
+[2025-10-21 01:16:07] [INFO] Tentativa de saque de R$ 100 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:16:07] [INFO] Erro durante saque na conta ID:7: Saldo insuficiente no caixa.
+[2025-10-21 01:16:39] [INFO] Tentativa de saque de R$ 100 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:16:39] [INFO] Erro durante saque na conta ID:7: Saldo insuficiente no caixa.
+[2025-10-21 01:16:50] [INFO] Tentativa de saque de R$ 20 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:16:50] [INFO] Erro durante saque na conta ID:7: Saldo insuficiente no caixa.
+[2025-10-21 01:16:56] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:16:56] [INFO] Depósito de R$ 200.00 na conta ID:7 realizado com sucesso.
+[2025-10-21 01:17:06] [INFO] Erro durante saque na conta ID:7: Não foi possível compor o valor solicitado você pode sacar: R$200
+[2025-10-21 01:17:12] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:17:12] [INFO] Saque de R$ 200.00 na conta ID:7 realizado com sucesso.
+[2025-10-21 01:19:37] [INFO] Nova conta criada: Rogerinho do Ingá 
+[2025-10-21 01:19:52] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:20:05] [INFO] Tentativa de saque de R$ 200 falhou: saldo insuficiente no caixa.
+[2025-10-21 01:20:05] [INFO] Erro durante saque na conta ID:8: Saldo insuficiente no caixa.
+[2025-10-21 01:20:14] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-21 01:20:14] [INFO] Depósito de R$ 100.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:20:24] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 01:20:24] [INFO] Saque de R$ 100.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:20:46] [INFO] Caixa descarregado completamente.
+[2025-10-21 01:20:54] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:21:01] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-21 01:21:01] [INFO] Depósito de R$ 100.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:31:29] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-10-21 01:31:29] [INFO] Saque de R$ 100.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:31:38] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:31:38] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:49:06] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:49:06] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:49:29] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:49:37] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:49:37] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:49:48] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:49:48] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:50:00] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:50:10] [INFO] Deposito de R$ 383.90 realizado com sucesso no caixa.
+[2025-10-21 01:50:10] [INFO] Depósito de R$ 383.90 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:50:35] [INFO] Deposito de R$ 50.00 realizado com sucesso no caixa.
+[2025-10-21 01:50:35] [INFO] Depósito de R$ 50.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:50:53] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:50:53] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:51:11] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:51:13] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:51:13] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:51:20] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:51:20] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:52:47] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:52:51] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:52:51] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:53:03] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:56:06] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:56:06] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:56:21] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:56:31] [INFO] Deposito de R$ 100.00 realizado com sucesso no caixa.
+[2025-10-21 01:56:31] [INFO] Depósito de R$ 100.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:56:40] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:56:40] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:56:59] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:57:03] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:57:03] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:57:11] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:57:11] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:57:19] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:57:23] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:57:23] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:57:28] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:57:28] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:57:48] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:57:52] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:57:52] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:58:31] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 01:58:31] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 01:58:44] [INFO] Conta alternada para ID: 8
+[2025-10-21 01:58:49] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 01:58:49] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 02:04:20] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 02:04:20] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 02:04:33] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:04:38] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 02:04:38] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 02:04:41] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 02:04:41] [INFO] Saque de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 02:04:51] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:04:54] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-10-21 02:04:54] [INFO] Depósito de R$ 200.00 na conta ID:8 realizado com sucesso.
+[2025-10-21 02:05:07] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado com as cédulas disponíveis
+[2025-10-21 02:06:26] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:06:39] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado.  você pode sacar: R$ 300,00?
+[2025-10-21 02:06:52] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado.  você pode sacar: R$ 300,00?
+[2025-10-21 02:07:26] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado você pode sacar: R$300
+[2025-10-21 02:08:16] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:08:25] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado você pode sacar: R$300
+[2025-10-21 02:11:54] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado você pode sacar: R$300
+[2025-10-21 02:12:07] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado você pode sacar: R$50
+[2025-10-21 02:12:28] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado.  você pode sacar: R$ 50,00?
+[2025-10-21 02:12:45] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:12:58] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado com as cédulas disponívei na regra alternativa.
+[2025-10-21 02:13:18] [INFO] Conta alternada para ID: 8
+[2025-10-21 02:18:20] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado com as cédulas disponívei na regra alternativa.

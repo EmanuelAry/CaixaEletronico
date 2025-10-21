@@ -62,15 +62,21 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
     }
 
     public function getCedulasParaSaque($valor) {
-        $valorRestante = $valor;
-        $cedulasParaSacar = [];
-        try{
-            $cedulasParaSacar = $this->getComposicaoCedulasSaque($valor, $this->cedula);
-            return $cedulasParaSacar;
-        } catch (\Exception $e) {
-            throw new \Exception("Erro ao obter cédulas para saque: " . $e->getMessage());
-        }
+        $cedulasParaSacar = $this->getComposicaoCedulasSaque($valor, $this->cedula);   
+        $cedulasSaque = $this->calcularCedulasRestantes($this->getCedulas(),$cedulasParaSacar);
+        return $cedulasSaque;
     }
+
+    public function calcularCedulasRestantes($qtdCedulaTotal, $qtdCedulaSaque){ 
+        $resultado = $qtdCedulaTotal;
+        foreach ($qtdCedulaSaque as $cedula => $quantidadeSaque) {
+            if (isset($resultado[$cedula])) {
+                $resultado[$cedula] -= $quantidadeSaque;
+            }
+        }
+        
+        return $resultado;
+    }    
 
     public function calculaRemocaoCedulasSaque($cedulasSaque) {
         //EMANUEL NECESSÁRIO REALIZAR REVISÃO DE REGRA

@@ -12,9 +12,7 @@ include __DIR__ . '/../templates/header.php';
     <form class="form-group" method="POST" action="<?php echo UrlHelper::baseUrl('/conta/alternarContaAction'); ?>">
         <label class="form-label" for="conta_id">ID da Conta:</label>
         <input class="form-input" type="number" id="conta_id" name="conta_id" required>
-        <!-- <div style="float: right; margin-top: 1rem"> -->
-            <button style="float: right; margin-top: 1rem" class="btn btn-primary" type="submit">Entrar</button>
-        <!-- </div> -->
+        <button style="float: right; margin-top: 1rem" class="btn btn-primary" type="submit">Entrar</button>
     </form>
 </div>
 

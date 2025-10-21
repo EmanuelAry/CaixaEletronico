@@ -327,7 +327,6 @@ function initSuggestedValues() {
     
     suggestedButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // REMOVIDO: debugger; // Remove para produção
             const value = this.getAttribute('data-value');
             const form = this.closest('.operation-form');
             const input = form?.querySelector('input[type="number"]') || 
@@ -401,7 +400,6 @@ function limparDeposito() {
 
 function handleDepositoSubmit(e) {
     e.preventDefault();
-    // REMOVIDO: debugger;
     
     const cedulasData = {};
     document.querySelectorAll('.cedula-count').forEach(countElement => {
@@ -409,7 +407,7 @@ function handleDepositoSubmit(e) {
         const quantidade = parseInt(countElement.textContent);
         
         if (quantidade > 0) {
-            cedulasData[valor] = quantidade; // CORRIGIDO: removido aspas extras
+            cedulasData[valor] = quantidade;
         }
     });
     

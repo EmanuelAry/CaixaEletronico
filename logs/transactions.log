@@ -289,3 +289,39 @@
 [2025-10-21 02:12:58] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado com as cédulas disponívei na regra alternativa.
 [2025-10-21 02:13:18] [INFO] Conta alternada para ID: 8
 [2025-10-21 02:18:20] [INFO] Erro durante saque na conta ID:8: Não foi possível compor o valor solicitado com as cédulas disponívei na regra alternativa.
+[2025-10-21 17:17:08] [INFO] Conta alternada para ID: 2
+[2025-10-21 17:25:13] [INFO] Conta alternada para ID: 2
+[2025-10-21 17:25:20] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-10-21 17:25:20] [INFO] Saque de R$ 200.00 na conta ID:2 realizado com sucesso.
+[2025-10-21 17:25:42] [INFO] Conta alternada para ID: 2
+[2025-10-21 17:25:49] [INFO] Tentativa de saque de R$ 200 falhou: saldo insuficiente no caixa.
+[2025-10-21 17:25:49] [INFO] Erro durante saque na conta ID:2: Saldo insuficiente no caixa.
+[2025-10-21 17:26:26] [INFO] Deposito de R$ 0.15 realizado com sucesso no caixa.
+[2025-10-21 17:26:26] [INFO] Depósito de R$ 0.15 na conta ID:2 realizado com sucesso.
+[2025-10-21 17:51:06] [INFO] Nova conta criada: Amaurilho
+[2025-10-21 17:51:11] [INFO] Conta alternada para ID: 9
+[2025-10-21 17:51:21] [INFO] Caixa descarregado completamente.
+[2025-10-21 17:51:28] [INFO] Conta alternada para ID: 9
+[2025-10-21 17:51:35] [INFO] Deposito de R$ 2.90 realizado com sucesso no caixa.
+[2025-10-21 17:51:35] [INFO] Depósito de R$ 2.90 na conta ID:9 realizado com sucesso.
+[2025-10-21 17:51:57] [INFO] Conta alternada para ID: 9
+[2025-10-21 17:52:07] [INFO] Erro durante saque na conta ID:9: Não foi possível compor o valor solicitado você pode sacar: R$2.9
+[2025-10-21 17:52:21] [INFO] Tentativa de saque de R$ 2.91 falhou: saldo insuficiente no caixa.
+[2025-10-21 17:52:21] [INFO] Erro durante saque na conta ID:9: Saldo insuficiente no caixa.
+[2025-10-21 17:52:30] [INFO] Tentativa de saque de R$ 2.91 falhou: saldo insuficiente no caixa.
+[2025-10-21 17:52:30] [INFO] Erro durante saque na conta ID:9: Saldo insuficiente no caixa.
+[2025-10-21 17:52:55] [INFO] Conta alternada para ID: 9
+[2025-10-21 17:52:58] [INFO] Deposito de R$ 0.05 realizado com sucesso no caixa.
+[2025-10-21 17:52:58] [INFO] Depósito de R$ 0.05 na conta ID:9 realizado com sucesso.
+[2025-10-21 17:53:07] [INFO] Conta alternada para ID: 9
+[2025-10-21 17:53:14] [INFO] Erro durante saque na conta ID:9: Não foi possível compor o valor solicitado você pode sacar: R$2.95
+[2025-10-21 17:53:22] [INFO] Erro durante saque na conta ID:9: Não foi possível compor o valor solicitado você pode sacar: R$2.5
+[2025-10-21 17:53:34] [INFO] Deposito de R$ 1.00 realizado com sucesso no caixa.
+[2025-10-21 17:53:34] [INFO] Depósito de R$ 1.00 na conta ID:9 realizado com sucesso.
+[2025-10-21 17:53:39] [INFO] Saque no Caixa no valor de R$ 1.00 realizado com sucesso.
+[2025-10-21 17:53:39] [INFO] Saque de R$ 1.00 na conta ID:9 realizado com sucesso.
+[2025-10-21 17:53:51] [INFO] Caixa descarregado completamente.
+[2025-10-21 17:53:53] [INFO] Caixa carregado com 10 unidades de cada cédula e moeda.
+[2025-10-21 17:54:07] [INFO] Conta alternada para ID: 6
+[2025-10-21 17:54:15] [INFO] Tentativa de saque na conta ID: 6 no valor de R$ 123.50 falhou: saldo insuficiente.
+[2025-10-21 17:54:33] [INFO] Tentativa de saque na conta ID: 6 no valor de R$ 123.01 falhou: saldo insuficiente.

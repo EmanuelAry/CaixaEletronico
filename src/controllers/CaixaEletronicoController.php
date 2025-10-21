@@ -23,6 +23,10 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         return $this->CaixaEletronicoModel;
     }
 
+    /**
+     * Recebe a requisição para carregar o caixa eletrônico com cédulas e moedas, faz o redirecionamento para a view de estoque do caixa.
+     * @throws \Exception Em caso de erro, trata os erros das funções chamadas e lança a notificação apropriada
+     */
     public function carregarCaixaEletronicoAction() {
         $novasCedulas = $this->CaixaEletronicoModel->calcularCarregamento();
         try {
@@ -39,6 +43,10 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         header('Location:'. UrlHelper::baseUrl('caixa/estoqueCaixaView'));
     }
 
+    /**
+     * Recebe a requisição para descarregar o caixa eletrônico com cédulas e moedas, faz o redirecionamento para a view de estoque do caixa.
+     * @throws \Exception Em caso de erro, trata os erros das funções chamadas e lança a notificação apropriada
+     */    
     public function descarregarCaixaEletronicoAction() {
         $novasCedulas = $this->CaixaEletronicoModel->calcularDescarregamento();
         try {
@@ -55,6 +63,12 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         header('Location:'. UrlHelper::baseUrl('caixa/estoqueCaixaView'));
     }
 
+    /**
+     * Executa as ações necessárias para realizar um saque no caixa eletrônico.
+     * @param float  $valor Float define o valor a ser sacado
+     * @param int  $regra Inteiro define qual a regra de saque
+     * @throws \Exception Em caso de erro, trata os erros das funções chamadas e lança a notificação apropriada
+     */ 
     public function saqueCaixaEletronicoAction($valor, $regra = 0) {
         $this->CaixaEletronicoModel->setEstrategia($regra);
         $valorTotalCaixa = $this->CaixaEletronicoModel->getValorTotal();
@@ -73,10 +87,7 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         $CedulasSaque = $this->CaixaEletronicoModel->getCedulasParaSaque($valor);
         $this->CaixaEletronicoDao->salvaQTDCedulasNoBanco($CedulasSaque);
         $this->CaixaEletronicoModel->setCedulas($CedulasSaque);
-        $this->notification->add('Saque no Caixa no valor de R$ ' . number_format($valor, 2) . ' realizado com sucesso.', 'success');
-        $this->logger->log("Saque no Caixa no valor de R$ " . number_format($valor, 2) . " realizado com sucesso.");
-        
-        // Redireciona ou exibe a view
+        $this->notification->add('Saque no Caixa no valor de R$ ' . number_format($valor, 2) . ' realizado com sucesso.', 'success');        $this->logger->log("Saque no Caixa no valor de R$ " . number_format($valor, 2) . " realizado com sucesso."); 
     }
 
     public function depositoCaixaEletronicoAction($cedulas) {
@@ -85,9 +96,7 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
         $this->CaixaEletronicoDao->salvaQTDCedulasNoBanco($CedulasNoCaixa);
         $this->CaixaEletronicoModel->setCedulas($CedulasNoCaixa);
         $this->notification->add('Depósito realizado com sucesso.', 'success');
-        //EMANUEL REVISAR REGRA NO CASO DE CENTÁVOS
         $this->logger->log("Deposito de R$ " . number_format($totalDepositado, 2) . " realizado com sucesso no caixa.");
-        // Redireciona ou exibe a view
     }
 
     public function valorTotalCaixaEletronicoAction() {

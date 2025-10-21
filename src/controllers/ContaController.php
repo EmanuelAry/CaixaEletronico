@@ -202,6 +202,7 @@ class ContaController implements IContaController {
     }
     
     public function criarContaView() {
+        // Inclui a view de criação de conta
         include __DIR__ . '/../views/contas/criarconta.php';
     }
     

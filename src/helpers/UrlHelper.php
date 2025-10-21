@@ -1,6 +1,6 @@
 <?php
 namespace app\helpers;
-
+// TRATA OS PATHS DAS URLS DO SISTEMA
 class UrlHelper {
     public static function baseUrl($path = '') {
         $basePath = '/caixaeletronico/public';

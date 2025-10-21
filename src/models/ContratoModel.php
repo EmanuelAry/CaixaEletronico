@@ -84,75 +84,28 @@ abstract class ContratoModel implements ICaixaEletronicoModel {
     }
 
     private function composicaoAlternativa($valor, $cedula) {
-        ksort($cedula); 
+        krsort($cedula);
+        $cedulaReservada = $cedula;
+        //FAZ A COMPOSIÇÃO SEM USAR AS CÉDULAS DE 100 E 200
+        unset($cedula[200]);
+        unset($cedula[100]);
         $valorRestante = $valor;
         $composicao = [];
-        
-        // Primeiro, tenta compor o valor usando apenas cédulas menores
-        foreach ($cedula as $denominacao => &$quantidadeDisponivel) {
+        foreach ($cedula as $denominacao => $quantidadeDisponivel) {
             if ($valorRestante <= 0) {
                 break;
             }
-            
-            // Se não for a última cédula (maior), tenta usar o máximo possível
-            if ($denominacao < max(array_keys($cedula))) {
-                $quantidadeNecessaria = floor($valorRestante / $denominacao);
-                $quantidadeASacar = min($quantidadeNecessaria, $quantidadeDisponivel);
-                
-                if ($quantidadeASacar > 0) {
-                    $composicao[$denominacao] = $quantidadeASacar;
-                    $quantidadeDisponivel -= $quantidadeASacar;
-                    $valorRestante -= $quantidadeASacar * $denominacao;
-                }
+            $quantidadeNecessaria = floor($valorRestante / $denominacao);
+            $quantidadeASacar = min($quantidadeNecessaria, $quantidadeDisponivel);
+            if ($quantidadeASacar > 0) {
+                $composicao[$denominacao] = $quantidadeASacar;
+                $valorRestante -= $quantidadeASacar * $denominacao;
             }
         }
-        
-        // Se ainda sobrou valor, usa as cédulas maiores apenas quando necessário
         if ($valorRestante > 0) {
-            krsort($cedula); // Ordena em ordem decrescente para pegar as maiores
-            
-            foreach ($cedula as $denominacao => &$quantidadeDisponivel) {
-                if ($valorRestante <= 0) {
-                    break;
-                }
-                
-                // Calcula a quantidade mínima necessária da cédula maior
-                $quantidadeMinima = ceil($valorRestante / $denominacao);
-                $quantidadeASacar = min($quantidadeMinima, $quantidadeDisponivel);
-                
-                // Se já temos alguma cédula desta denominação na composição, ajusta
-                $quantidadeExistente = $composicao[$denominacao] ?? 0;
-                $quantidadeTotal = $quantidadeExistente + $quantidadeASacar;
-                
-                // Verifica se podemos evitar usar cédulas grandes desnecessariamente
-                if ($quantidadeASacar > 0 && $valorRestante >= $denominacao) {
-                    $composicao[$denominacao] = $quantidadeTotal;
-                    $quantidadeDisponivel -= $quantidadeASacar;
-                    $valorRestante -= $quantidadeASacar * $denominacao;
-                }
-            }
+            //se não for possível fazer a composição sem as cedulas de 100 e 200, utiliza a composição padrão;
+            return $this->composicaoPadrao($valor, $cedulaReservada);
         }
-        
-        if ($valorRestante > 0) {
-            // Encontra o próximo valor possível com a mesma estratégia
-            $proximoValor = $this->encontrarProximoValorPossivelPadrao($valor, $cedula);
-            if ($proximoValor > $valor) {
-                throw new \Exception(
-                    "Não foi possível compor o valor solicitado. " .
-                    " você pode sacar: R$ " . number_format($proximoValor, 2, ',', '.') . "?"
-                );
-            } else {
-                throw new \Exception("Não foi possível compor o valor solicitado com as cédulas disponívei na regra alternativa.");
-            }
-        }
-        
-        // Remove entradas com quantidade zero e retorna
-        $composicao = array_filter($composicao, function($quantidade) {
-            return $quantidade > 0;
-        });
-        
-        krsort($composicao); // Ordena a composição final por denominação decrescente
-        
         return $composicao;
     }
 

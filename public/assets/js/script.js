@@ -1,4 +1,3 @@
-// Funções para melhorar a experiência do usuário
 document.addEventListener('DOMContentLoaded', function() {
     debugger;
     // Auto-focus no campo de ID na seleção de conta

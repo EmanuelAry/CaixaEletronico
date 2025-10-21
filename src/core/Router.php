@@ -170,8 +170,6 @@ class Router {
 
     // Métodos auxiliares para definir rotas comuns
     public function setupDefaultRoutes() {
-        //EMANUEL REVISAR ROTAS
-
         // Pagina inicial
         $this->addRoute('GET', '/', 'ContaController', 'listarContasView');
         

@@ -79,7 +79,6 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
     }    
 
     public function calculaRemocaoCedulasSaque($cedulasSaque) {
-        //EMANUEL NECESSÁRIO REALIZAR REVISÃO DE REGRA
         $copia = $this->cedula;
         foreach ($cedulasSaque as $cedula => $quantidade) {
             $copia[$cedula] -= $quantidade;
@@ -99,7 +98,6 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
                 }
                 $copia[$cedula] += $quantidade;
             } else {
-                //EMANUEL REVISAR REGRA NO CASO DE CENTÁVOS
                 throw new \Exception("Cédula de R$ " . number_format($cedula, 2) . " não é aceita");
             }
         }
@@ -115,7 +113,6 @@ class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoMode
     }
 
     public function CalculaTotalByCedulas($cedulas) {
-        //EMANUEL NECESSÁRIO REALIZAR REVISÃO DE REGRA
         $total = 0;
         foreach ($cedulas as $denominacao => $quantidade) {
             $total += (float)$denominacao * $quantidade;

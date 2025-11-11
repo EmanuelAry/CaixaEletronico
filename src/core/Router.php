@@ -186,8 +186,8 @@ class Router {
         $this->addRoute('GET', '/conta/criar',               'ContaController', 'criarContaView');
 
         // Rotas para CaixaEletronicoController
-        $this->addRoute('GET', '/caixa/estoqueCaixaView',    'CaixaEletronicoController', 'estoqueCaixaView');
-        $this->addRoute('POST', '/caixa/estoqueCaixaView',   'CaixaEletronicoController', 'estoqueCaixaView');
+        $this->addRoute('GET', '/caixa/estoqueCaixaAction',    'CaixaEletronicoController', 'estoqueCaixaAction');
+        $this->addRoute('POST', '/caixa/estoqueCaixaAction',   'CaixaEletronicoController', 'estoqueCaixaAction');
         $this->addRoute('GET', 'caixa/carregar',             'CaixaEletronicoController', 'carregarCaixaEletronicoAction');
         $this->addRoute('POST', 'caixa/carregar',            'CaixaEletronicoController', 'carregarCaixaEletronicoAction');
         $this->addRoute('GET', 'caixa/descarregar',          'CaixaEletronicoController', 'descarregarCaixaEletronicoAction');

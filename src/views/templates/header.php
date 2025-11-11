@@ -16,7 +16,7 @@ use app\helpers\UrlHelper;
             <nav class="nav">
                 <a href="<?= UrlHelper::baseUrl('conta/selecionar') ?>" class="nav-link">Selecionar Conta</a>
                 <a href="<?= UrlHelper::baseUrl('conta/criar') ?>" class="nav-link">Nova Conta</a>
-                <a href="<?= UrlHelper::baseUrl('caixa/estoqueCaixaView') ?>" class="nav-link">Estoque Caixa</a>
+                <a href="<?= UrlHelper::baseUrl('caixa/estoqueCaixaAction') ?>" class="nav-link">Estoque Caixa</a>
             </nav>
             <br>
             <?php if (isset($contaSelecionada) && $contaSelecionada): ?>

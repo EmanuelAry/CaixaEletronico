@@ -6,12 +6,14 @@ use app\contracts\dao\IContaDao;
 class ContaModel implements IContaModel {
     private $id;
     private $conta_nome;
+    private $conta_email;
     private $saldo;
 
-    public function __construct($id, $conta_nome, $saldo) {
+    public function __construct($id, $conta_nome, $saldo, $conta_email) {
         $this->setId($id);
         $this->setContaNome($conta_nome);
         $this->setSaldo($saldo);
+        $this->setContaEmail($conta_email);
     }
 
     public function setId($id) {
@@ -26,6 +28,10 @@ class ContaModel implements IContaModel {
         $this->conta_nome = $conta_nome;
     }
 
+    public function setContaEmail($conta_email) {
+        $this->conta_email = $conta_email;
+    }
+
     public function getSaldo() {
         return $this->saldo;
     }
@@ -38,10 +44,15 @@ class ContaModel implements IContaModel {
         return $this->id;
     }
 
-    public function loadDataConta($id, $conta_nome, $saldo) {
+    public function getContaEmail() {
+        return $this->conta_email;
+    }
+
+    public function loadDataConta($id, $conta_nome, $saldo, $conta_email) {
         $this->setId($id);
         $this->setContaNome($conta_nome);
         $this->setSaldo($saldo);
+        $this->setContaEmail($conta_email);
     }
 
     public function SaqueConta($valor) {

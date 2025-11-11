@@ -3,14 +3,20 @@
 namespace app\contracts\controllers;
 
 interface IContaController {
-    public function alternarConta($contaId);
-    public function alternarContaAction();
-    public function listarContas();
-    public function criarConta($contaNome, $saldoInicial);
+    
+
+    // --- ACTIONS --- //
     public function saqueContaAction();
     public function depositoContaAction();
     public function valorTotalContaAction();
-    public function selecionarContaAction();
-    public function criarContaView();
+    public function loginContaAction();
+    public function alternarContaAction();
+    public function criarContaAction();
+
+    // ---- VIEWS ---- //
+    public function menuCaixaView();
+    public function loginContaView();
     public function listarContasView();
+    public function criarContaView();
+    public function selecionarContaView();
 }

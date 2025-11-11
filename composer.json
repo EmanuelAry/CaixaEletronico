@@ -1,0 +1,22 @@
+{
+    "name": "emanuel/caixa-eletronico",
+    "autoload": {
+        "psr-4": {
+            "app\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }   
+    },
+    "authors": [
+        {
+            "name": "EmanuelAry",
+            "email": "emanuel2003ary@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}

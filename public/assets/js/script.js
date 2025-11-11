@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    debugger;
     // Auto-focus no campo de ID na seleção de conta
     const contaIdInput = document.querySelector('input[name="conta_id"]');
     if (contaIdInput) {

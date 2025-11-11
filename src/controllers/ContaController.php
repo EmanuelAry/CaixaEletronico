@@ -106,7 +106,7 @@ class ContaController implements IContaController {
 
     public function menuCaixaView() {
         try{
-            $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
+            $contaSelecionada = $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
             // Inclui a view do menu do caixa eletrônico com base nos dados da conta logada
             include __DIR__ . '/../views/caixa/saquedepositocaixa.php';
         }catch(\Exception $e){

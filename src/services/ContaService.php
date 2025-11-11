@@ -139,7 +139,7 @@ class ContaService implements IContaService {
             $conta = $this->ContaDao->getContaById($contaId);
             $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
             $_SESSION['conta_id'] = $conta['conta_id'];
-            $this->CaixaEletronicoService->depositoCaixaEletronico($contaId, $cedulas);
+            $this->CaixaEletronicoService->depositoCaixaEletronico($cedulas);
             $valor = $this->CaixaEletronicoService->getCaixaEletronicoModel()->CalculaTotalByCedulas($cedulas);
             $this->ContaModel->DepositoConta($valor);
             $novoSaldo = $this->ContaModel->getSaldo();
@@ -162,7 +162,7 @@ class ContaService implements IContaService {
                 $this->logger->log("Tentativa de saque na conta ID: " . $this->ContaModel->getId() . " no valor de R$ " . number_format($valor, 2) . " falhou: saldo insuficiente.");
                 return;
             }
-            $this->CaixaEletronicoService->saqueCaixaEletronico($conta_id, $valor, $regraSaque);
+            $this->CaixaEletronicoService->saqueCaixaEletronico($valor, $regraSaque);
             $this->ContaModel->SaqueConta($valor);
             $novoSaldo = $this->ContaModel->getSaldo();
             $this->ContaDao->updateSaldo($this->ContaModel->getId(), $novoSaldo);

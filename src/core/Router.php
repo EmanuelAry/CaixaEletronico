@@ -5,6 +5,7 @@ use app\contracts\core\ILogger;
 use app\core\Logger;
 use app\core\Notification;
 use app\core\Database;
+use app\services\CaixaEletronicoService;
 
 class Router {
     private $routes = [];
@@ -96,17 +97,19 @@ class Router {
         // Resolve as dependências específicas de cada controller
         switch ($controllerClass) {
             case 'app\\controllers\\ContaController':
-                $contaDao = new \app\dao\ContaDao($this->database);
-                $contaModel = new \app\models\ContaModel(0, '', 0); // Model vazio inicialmente
                 $caixaDao = new \app\dao\CaixaEletronicoDao($this->database);
                 $caixaModel = new \app\models\CaixaEletronicoModel($caixaDao);
-                $controllerCaixaEletronico = new \app\controllers\CaixaEletronicoController($caixaModel, $caixaDao, $this->logger, $this->notification);
-                return new $controllerClass($contaModel, $contaDao, $controllerCaixaEletronico, $this->logger, $this->notification);
+                $caixaService = new \app\services\CaixaEletronicoService($caixaModel, $caixaDao, $this->logger, $this->notification);
+                $contaDao = new \app\dao\ContaDao($this->database);
+                $contaModel = new \app\models\ContaModel(0, '', 0, ''); // Model vazio inicialmente
+                $contaService = new \app\services\ContaService($contaModel, $contaDao, $this->logger, $this->notification, $caixaService);
+                return new $controllerClass($contaService);
             
             case 'app\\controllers\\CaixaEletronicoController':
                 $caixaDao = new \app\dao\CaixaEletronicoDao($this->database);
                 $caixaModel = new \app\models\CaixaEletronicoModel($caixaDao);
-                return new $controllerClass($caixaModel, $caixaDao, $this->logger, $this->notification);
+                $caixaService = new \app\services\CaixaEletronicoService($caixaModel, $caixaDao, $this->logger, $this->notification);
+                return new $controllerClass($caixaService);
             
             default:
                 return new $controllerClass();

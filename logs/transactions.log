@@ -415,3 +415,5 @@
 [2025-11-12 15:08:14] [INFO] Conta logada com ID: 15
 [2025-11-12 19:23:22] [INFO] Nova conta criada: testset
 [2025-11-12 19:23:29] [INFO] Conta logada com ID: 16
+[2025-11-12 20:16:50] [INFO] Erro ao criar conta: O nome não pode conter caracteres especiais ou números
+[2025-11-12 20:18:10] [INFO] Erro ao criar conta: O nome não pode conter caracteres especiais ou números

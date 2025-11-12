@@ -85,16 +85,23 @@ class ContaService implements IContaService {
     }
 
     public function criarConta($contaNome, $contaEmail, $contaSenha, $saldoInicial) {
-        $dadosConta = [
-            'conta_nome' => $contaNome,
-            'conta_saldo' => $saldoInicial,
-            'conta_email' => $contaEmail,
-            'conta_senha' => password_hash($contaSenha, PASSWORD_BCRYPT)
-        ];
         try{
-            if(!isset($contaNome, $contaEmail, $contaSenha, $saldoInicial)){
+            if(!isset($contaNome) || !isset($contaEmail) || !isset($contaSenha) || !isset($saldoInicial)){
                 throw new \Exception('Existem dados nulos no cadastro de conta');
             }   
+
+            // Validação de caracteres especiais no nome
+            if (preg_match('/[^a-zA-Z\sÀ-ÿ]/u', $contaNome)) {
+                $this->notifications->add("O nome não pode conter caracteres especiais ou números", "error");
+                throw new \Exception('O nome não pode conter caracteres especiais ou números');
+            }
+
+            $dadosConta = [
+                'conta_nome' => $contaNome,
+                'conta_saldo' => $saldoInicial,
+                'conta_email' => $contaEmail,
+                'conta_senha' => password_hash($contaSenha, PASSWORD_BCRYPT)
+            ];
             $resultado = $this->ContaDao->createConta($dadosConta);
             if ($resultado) {
                 $this->logger->log("Nova conta criada: " . $contaNome);

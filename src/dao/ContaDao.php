@@ -70,6 +70,6 @@ class ContaDao implements IContaDao {
     }
 
     public function getIdUltimoRegistroInserido(){
-        return $this->db->laslastInsertId();
+        return $this->db->lastInsertId();
     }
 }

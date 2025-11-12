@@ -379,3 +379,39 @@
 [2025-11-11 22:32:58] [INFO] Depósito de R$ 383.90 na conta ID:3 realizado com sucesso.
 [2025-11-11 22:33:30] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
 [2025-11-11 22:33:30] [INFO] Saque de R$ 200.00 na conta ID:3 realizado com sucesso.
+[2025-11-12 13:20:07] [INFO] Nova conta criada: Julinho da Van
+[2025-11-12 14:00:17] [INFO] Erro ao fazer login: ID da conta ou senha inválidos
+[2025-11-12 14:02:11] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:03:29] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:03:58] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:05:31] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:06:03] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:10:58] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:12:10] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:12:44] [INFO] Nova conta criada: Dorothy Brisola
+[2025-11-12 14:29:05] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:29:51] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:30:39] [INFO] Nova conta criada: Odete Roiteman
+[2025-11-12 14:31:09] [INFO] Erro ao fazer login: Email ou senha inválidos
+[2025-11-12 14:31:56] [INFO] Nova conta criada: TESTES EMANUEL
+[2025-11-12 14:33:02] [INFO] Nova conta criada: Dorothy Brisola
+[2025-11-12 14:33:26] [INFO] Conta logada com ID: 15
+[2025-11-12 14:40:08] [INFO] Conta logada com ID: 15
+[2025-11-12 14:40:27] [INFO] Conta logada com ID: 15
+[2025-11-12 14:46:06] [INFO] Conta logada com ID: 15
+[2025-11-12 15:02:10] [INFO] Conta logada com ID: 15
+[2025-11-12 15:03:19] [INFO] Conta logada com ID: 15
+[2025-11-12 15:04:44] [INFO] Conta logada com ID: 15
+[2025-11-12 15:06:57] [INFO] Conta logada com ID: 15
+[2025-11-12 15:07:08] [INFO] Deposito de R$ 200.00 realizado com sucesso no caixa.
+[2025-11-12 15:07:08] [INFO] Depósito de R$ 200.00 na conta ID:15 realizado com sucesso.
+[2025-11-12 15:07:13] [INFO] Saque no Caixa no valor de R$ 200.00 realizado com sucesso.
+[2025-11-12 15:07:13] [INFO] Saque de R$ 200.00 na conta ID:15 realizado com sucesso.
+[2025-11-12 15:07:16] [INFO] Tentativa de saque na conta ID: 15 no valor de R$ 200.00 falhou: saldo insuficiente.
+[2025-11-12 15:07:28] [INFO] Tentativa de saque na conta ID: 15 no valor de R$ 200.23 falhou: saldo insuficiente.
+[2025-11-12 15:07:37] [INFO] Saque no Caixa no valor de R$ 100.00 realizado com sucesso.
+[2025-11-12 15:07:37] [INFO] Saque de R$ 100.00 na conta ID:15 realizado com sucesso.
+[2025-11-12 15:07:43] [INFO] Tentativa de saque na conta ID: 15 no valor de R$ 50.00 falhou: saldo insuficiente.
+[2025-11-12 15:08:14] [INFO] Conta logada com ID: 15
+[2025-11-12 19:23:22] [INFO] Nova conta criada: testset
+[2025-11-12 19:23:29] [INFO] Conta logada com ID: 16

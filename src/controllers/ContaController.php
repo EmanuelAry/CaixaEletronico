@@ -48,17 +48,22 @@ class ContaController implements IContaController {
         return $valor;
     }
     
+    public function logoutContaAction(){
+        session_destroy();
+        header('Location:'. UrlHelper::baseUrl('conta/login')); 
+    }
+
     public function loginContaAction(){
-       if(isset($_POST['conta_id']) && isset($_POST['conta_senha'])){
-            $contaId = $_POST['conta_id'] ?? null;
+       if(isset($_POST['conta_email']) && isset($_POST['conta_senha'])){
+            $contaEmail = $_POST['conta_email'] ?? null;
             $contaSenha = $_POST['conta_senha'] ?? null;
         }
-        if(!isset($contaId, $contaSenha) || empty($contaId) || empty($contaSenha)){
+        if(!isset($contaEmail, $contaSenha) || empty($contaEmail) || empty($contaSenha)){
             header('Location:'. UrlHelper::baseUrl('conta/login'));
             exit; 
         }
         try{
-            $this->ContaService->loginConta($contaId, $contaSenha);
+            $this->ContaService->loginConta($contaEmail, $contaSenha);
             // Redireciona para a tela do caixa eletrônico após entrar
             header('Location:'. UrlHelper::baseUrl('conta/menuCaixaView'));
         }catch(\Exception $e){
@@ -80,7 +85,7 @@ class ContaController implements IContaController {
             // Redireciona para a tela do caixa eletrônico após entrar
             header('Location:'. UrlHelper::baseUrl('conta/menuCaixaView'));
         }catch(\Exception $e){
-            header('Location:'. UrlHelper::baseUrl('conta/selecionar'));
+            header('Location:'. UrlHelper::baseUrl('conta/login'));
         }    
         exit;
     }
@@ -94,7 +99,7 @@ class ContaController implements IContaController {
         if ($contaNome && $contaEmail && $contaSenha) {
             $this->ContaService->criarConta($contaNome, $contaEmail, $contaSenha, $saldoInicial);
             // Redireciona para a tela de seleção de conta após criar
-            header('Location:'. UrlHelper::baseUrl('conta/selecionar'));
+            header('Location:'. UrlHelper::baseUrl('conta/login'));
             exit;
         } else {
             header('Location:'. UrlHelper::baseUrl('conta/criar'));
@@ -106,37 +111,50 @@ class ContaController implements IContaController {
 
     public function menuCaixaView() {
         try{
-            $contaSelecionada = $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
-            // Inclui a view do menu do caixa eletrônico com base nos dados da conta logada
-            include __DIR__ . '/../views/caixa/saquedepositocaixa.php';
+            if(isset($_SESSION['conta_id'])){
+                $contaSelecionada = $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
+                $_SESSION['conta_id']    = $contaSelecionada['conta_id'];
+                $_SESSION['conta_nome']  = $contaSelecionada['conta_nome'];
+                $_SESSION['conta_saldo'] = $contaSelecionada['conta_saldo'];
+                $_SESSION['conta_email'] = $contaSelecionada['conta_email'];
+                // Inclui a view do menu do caixa eletrônico com base nos dados da conta logada
+                include __DIR__ . '/../views/caixa/saquedepositocaixa.php';
+            }else{
+                throw new \Exception;
+            }
         }catch(\Exception $e){
             header('Location:'. UrlHelper::baseUrl('conta/login'));
         }
     }
 
     public function loginContaView() {
-        // Inclui a view de login de conta
-        include __DIR__ . '/../views/contas/loginconta.php';
-    }
-
-    public function listarContasView() {
-        $contas = $this->ContaService->listarContas();
-        // Inclui a view de seleção de contas, passando $contas para a view
-        include __DIR__ . '/../views/contas/selecionarconta.php';
+        try{
+            if(isset($_SESSION['conta_id'])){
+                $contaSelecionada = $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
+                $_SESSION['conta_id']    = $contaSelecionada['conta_id'];
+                $_SESSION['conta_nome']  = $contaSelecionada['conta_nome'];
+                $_SESSION['conta_saldo'] = $contaSelecionada['conta_saldo'];
+                $_SESSION['conta_email'] = $contaSelecionada['conta_email'];
+            }
+            $contas = $this->ContaService->listarContas();
+            // Inclui a view de login de conta
+            include __DIR__ . '/../views/contas/selecionarconta.php';
+        }catch(\Exception $e){
+            // Inclui a view de login de conta
+            include __DIR__ . '/../views/contas/selecionarconta.php';
+        }
     }
     
     public function criarContaView() {
+        if(isset($_SESSION['conta_id'])){
+            $contaSelecionada = $this->ContaService->getInfoCaixaMenuByConta($_SESSION['conta_id']);
+            $_SESSION['conta_id']    = $contaSelecionada['conta_id'];
+            $_SESSION['conta_nome']  = $contaSelecionada['conta_nome'];
+            $_SESSION['conta_saldo'] = $contaSelecionada['conta_saldo'];
+            $_SESSION['conta_email'] = $contaSelecionada['conta_email'];
+        }
         // Inclui a view de criação de conta
         include __DIR__ . '/../views/contas/criarconta.php';
-    }
-
-    //EMANUEL VERIFICAR SE AINDA VAI EXISTIR ESSA TELA;
-    public function selecionarContaView() {
-        $contas = $this->ContaService->listarContas();
-        // EMANUEL VERIFICAR COMO VAI FUCNIONAR AS NOTIFICAÇÕES AQUI
-        // $notifications = $this->notifications->getNotifications();
-        // Inclui a view de seleção de conta
-        include __DIR__ . '/../views/contas/selecionarconta.php';
     }
     
 }

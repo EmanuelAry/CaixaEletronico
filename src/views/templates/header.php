@@ -14,9 +14,13 @@ use app\helpers\UrlHelper;
         <header class="header">
             <h1>Caixa Eletrônico</h1>
             <nav class="nav">
-                <a href="<?= UrlHelper::baseUrl('conta/selecionar') ?>" class="nav-link">Selecionar Conta</a>
+                <a href="<?= UrlHelper::baseUrl('conta/login') ?>" class="nav-link">Selecionar Conta</a>
                 <a href="<?= UrlHelper::baseUrl('conta/criar') ?>" class="nav-link">Nova Conta</a>
-                <a href="<?= UrlHelper::baseUrl('caixa/estoqueCaixaAction') ?>" class="nav-link">Estoque Caixa</a>
+                <?php if (isset($contaSelecionada) && $contaSelecionada): ?>
+                    <a href="<?= UrlHelper::baseUrl('caixa/estoqueCaixaAction') ?>" class="nav-link">Estoque Caixa</a>
+                    <a href="<?= UrlHelper::baseUrl('conta/menuCaixaView') ?>" class="nav-link">Menu</a>
+                    <a href="<?= UrlHelper::baseUrl('conta/logoutAction') ?>" class="nav-link">Logout</a>
+                <?php endif; ?>    
             </nav>
             <br>
             <?php if (isset($contaSelecionada) && $contaSelecionada): ?>

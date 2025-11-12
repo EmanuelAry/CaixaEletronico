@@ -9,10 +9,22 @@ include __DIR__ . '/../templates/header.php';
 
 <div style="margin-bottom: 4rem">
     <h2 class="subtitle">Entrar em uma conta existente</h2>
-    <form class="form-group" method="POST" action="<?php echo UrlHelper::baseUrl('/conta/alternarContaAction'); ?>">
-        <label class="form-label" for="conta_id">ID da Conta:</label>
-        <input class="form-input" type="number" id="conta_id" name="conta_id" required>
-        <button style="float: right; margin-top: 1rem" class="btn btn-primary" type="submit">Entrar</button>
+    <form class="form-group" method="POST" action="<?php echo UrlHelper::baseUrl('/conta/loginAction/?XDEBUG_SESSION=VSCODE'); ?>">
+        <div class="form-group">
+            <label class="form-label" for="conta_email">Email:</label>
+            <input class="form-input" type="email" id="conta_email" name="conta_email" required 
+                   placeholder="Digite o email da conta">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="conta_senha">Senha:</label>
+            <input class="form-input" type="password" id="conta_senha" name="conta_senha" required 
+                   placeholder="Digite a senha">
+        </div>
+        
+        <button style="float: right; margin-top: 1rem" class="btn btn-primary" type="submit">
+            Fazer Login
+        </button>
     </form>
 </div>
 
@@ -24,10 +36,12 @@ include __DIR__ . '/../templates/header.php';
         <ul class="conta-list">
             <?php foreach ($contas as $conta): ?>
                 <li class="conta-item" 
-                    onclick="window.location.href='<?php echo UrlHelper::baseUrl('/conta/alternarContaAction/?conta_id=' . $conta['conta_id']); ?>'+''">
+                    data-email="<?php echo htmlspecialchars($conta['conta_email'] ?? ''); ?>"
+                    onclick="selecionarConta(this)">
                     <strong>ID: <?php echo $conta['conta_id']; ?></strong> - 
                     <?php echo htmlspecialchars($conta['conta_nome']); ?> - 
                     Saldo: R$ <?php echo number_format($conta['conta_saldo'], 2, ',', '.'); ?>
+                    <input type="hidden" class="conta-email" value="<?php echo htmlspecialchars($conta['conta_email'] ?? ''); ?>">
                 </li>
             <?php endforeach; ?>
         </ul>

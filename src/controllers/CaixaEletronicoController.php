@@ -46,9 +46,16 @@ class CaixaEletronicoController implements ICaixaEletronicoController {
             $valor_total   = $aViewEstoque['valor_total'];
             $total_cedulas = $aViewEstoque['total_cedulas'];
             $total_moedas  = $aViewEstoque['total_moedas'];
+            if(isset($_SESSION['conta_id'])){
+                $contaSelecionada = [];
+                $contaSelecionada['conta_id']    = $_SESSION['conta_id'];
+                $contaSelecionada['conta_nome']  = $_SESSION['conta_nome'];
+                $contaSelecionada['conta_saldo'] = $_SESSION['conta_saldo'];
+                $contaSelecionada['conta_email'] = $_SESSION['conta_email'];
+            }
             include __DIR__ . '/../views/caixa/estoquecaixa.php';
         }catch(\Exception $e){
-            header('Location:'. UrlHelper::baseUrl('conta/selecionar'));
+            header('Location:'. UrlHelper::baseUrl('conta/login'));
         }
     }
 }

@@ -51,3 +51,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function selecionarConta(element) {
+    const email = element.getAttribute('data-email');
+    if (email) {
+        document.getElementById('conta_email').value = email;
+        document.getElementById('conta_senha').focus();
+        
+        // Rolagem suave até o formulário de login
+        document.querySelector('form').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center'
+        });
+        
+        // Destaque visual no campo de email
+        const emailField = document.getElementById('conta_email');
+        emailField.style.borderColor = '#1abc9c';
+        emailField.style.boxShadow = '0 0 0 3px rgba(26, 188, 156, 0.2)';
+        
+        setTimeout(() => {
+            emailField.style.borderColor = '';
+            emailField.style.boxShadow = '';
+        }, 2000);
+    }
+}

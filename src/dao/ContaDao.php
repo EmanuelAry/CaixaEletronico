@@ -21,6 +21,17 @@ class ContaDao implements IContaDao {
         }
     }
 
+    public function getContaByEmail($email) {
+        try {
+            $stmt = $this->db->prepare("SELECT conta_id, conta_nome, conta_email, conta_saldo, conta_senha FROM conta WHERE conta_email = :conta_email");
+            $stmt->execute([':conta_email' => $email]);
+            $retorno = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $retorno;
+        } catch (\Exception $e) {
+            throw new \Exception("Erro ao resgatar conta email: " . $email . " no banco: " . $e->getMessage());
+        }
+    }
+
     public function getContaById($id) {
         try {
             $stmt = $this->db->prepare("SELECT conta_id, conta_nome, conta_email, conta_saldo, conta_senha FROM conta WHERE conta_id = :conta_id");
@@ -47,7 +58,7 @@ class ContaDao implements IContaDao {
         try {
             $stmt = $this->db->prepare("INSERT INTO conta (conta_nome, conta_email, conta_senha, conta_saldo) VALUES (:conta_nome, :conta_email, :conta_senha, :conta_saldo)");
             $retorno = $stmt->execute([
-            ':conta_nome' => $dadosConta['conta_nome'],
+            ':conta_nome'  => $dadosConta['conta_nome'],
             ':conta_email' => $dadosConta['conta_email'],
             ':conta_senha' => $dadosConta['conta_senha'],
             ':conta_saldo' => $dadosConta['conta_saldo']

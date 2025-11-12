@@ -9,6 +9,7 @@ interface IContaController {
     public function saqueContaAction();
     public function depositoContaAction();
     public function valorTotalContaAction();
+    public function logoutContaAction();
     public function loginContaAction();
     public function alternarContaAction();
     public function criarContaAction();
@@ -16,7 +17,5 @@ interface IContaController {
     // ---- VIEWS ---- //
     public function menuCaixaView();
     public function loginContaView();
-    public function listarContasView();
     public function criarContaView();
-    public function selecionarContaView();
 }

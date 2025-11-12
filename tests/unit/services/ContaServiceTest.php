@@ -1,47 +1,56 @@
 <?php
-namespace tests\unit\controllers;
+namespace tests\unit\services;
 
 use PHPUnit\Framework\TestCase;
-use app\controllers\ContaController;
+use app\services\ContaService;
 use app\contracts\models\IContaModel;
 use app\contracts\dao\IContaDao;
-use app\contracts\controllers\ICaixaEletronicoController;
+use app\contracts\services\ICaixaEletronicoService;
 use app\contracts\core\ILogger;
 use app\contracts\core\INotification;
 
-class ContaControllerTest extends TestCase
+class ContaServiceTest extends TestCase
 {
     private $contaModelMock;
     private $contaDaoMock;
     private $caixaEletronicoMock;
     private $loggerMock;
     private $notificationMock;
-    private $contaController;
+    private $contaService;
 
     protected function setUp(): void
     {
         $this->contaModelMock = $this->createMock(IContaModel::class);
         $this->contaDaoMock = $this->createMock(IContaDao::class);
-        $this->caixaEletronicoMock = $this->createMock(ICaixaEletronicoController::class);
+        $this->caixaEletronicoMock = $this->createMock(ICaixaEletronicoService::class);
         $this->loggerMock = $this->createMock(ILogger::class);
         $this->notificationMock = $this->createMock(INotification::class);
 
-        $this->contaController = new ContaController(
+        $this->contaService = new ContaService(
             $this->contaModelMock,
             $this->contaDaoMock,
-            $this->caixaEletronicoMock,
             $this->loggerMock,
-            $this->notificationMock
+            $this->notificationMock,
+            $this->caixaEletronicoMock
         );
     }
     
-    public function testCriarContaComSucesso()
+    public function testValidarCadastroNovaConta()
     {
         $this->contaDaoMock->method('createConta')->willReturn(true);
         $this->loggerMock->expects($this->once())->method('log');
         $this->notificationMock->expects($this->once())->method('add');
 
-        $this->contaController->criarConta('Nova Conta', 100.00);
+        $this->assertTrue($this->contaService->criarConta('João Melão','joao.melao@email.com', 900.00, '123'), 'A Conta não foi Criada!');
+    }
+    public function testValidarBloqueioCadastroNovaContaComDadoNullo()
+    {
+        $this->contaDaoMock->method('createConta')->willReturn(true);
+        $this->loggerMock->expects($this->once())->method('log');
+        $this->notificationMock->expects($this->once())->method('add');
+
+        $this->expectException(\Exception::class);
+        $this->assertFalse($this->contaService->criarConta(null,null, null, null), 'Conta não foi criada por ter dados nullos');
     }
 
     public function testAlternarContaComSucesso()
@@ -54,9 +63,9 @@ class ContaControllerTest extends TestCase
         $this->loggerMock->expects($this->once())->method('log');
         $this->notificationMock->expects($this->once())->method('add');
 
-        $this->contaController->alternarConta($contaId);
+        $this->contaService->alternarConta($contaId);
         
-        $this->assertEquals($contaId, $_SESSION['conta_id']);
+        $this->assertEquals($contaId, ['conta_id']);
     }
 
     public function testAlternarContaComContaNaoEncontrada()
@@ -66,7 +75,7 @@ class ContaControllerTest extends TestCase
         $this->loggerMock->expects($this->once())->method('log');
 
         $this->expectException(\Exception::class);
-        $this->contaController->alternarConta(999);
+        $this->contaService->alternarConta(999);
     }
 
     public function testListarContas()
@@ -74,7 +83,7 @@ class ContaControllerTest extends TestCase
         $expected = [['conta_id' => 1, 'conta_nome' => 'Conta Teste']];
         $this->contaDaoMock->method('getAllContas')->willReturn($expected);
 
-        $result = $this->contaController->listarContas();
+        $result = $this->contaService->listarContas();
         
         $this->assertEquals($expected, $result);
     }
@@ -94,7 +103,7 @@ class ContaControllerTest extends TestCase
         $this->notificationMock->expects($this->once())->method('add');
         $this->loggerMock->expects($this->once())->method('log');
 
-        $this->contaController->saqueContaAction();
+        $this->contaService->saqueContaAction();
     }
 
     public function testDepositoContaAction()
@@ -116,7 +125,7 @@ class ContaControllerTest extends TestCase
         $this->contaDaoMock->expects($this->once())->method('updateSaldo');
         $this->notificationMock->expects($this->once())->method('add');
 
-        $this->contaController->depositoContaAction();
+        $this->contaService->depositoContaAction();
     }
 
     protected function tearDown(): void

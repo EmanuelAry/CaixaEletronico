@@ -7,10 +7,18 @@ include __DIR__ . '/../templates/header.php';
 
 <?php include __DIR__ . '/../templates/notifications.php'; ?>
 
-<form method="POST" action="<?php echo UrlHelper::baseUrl('/conta/criarContaAction'); ?>">
+<form method="POST" action="<?php echo UrlHelper::baseUrl('/conta/criarContaAction/?XDEBUG_SESSION=VSCODE'); ?>">
     <div>
         <label class="form-label" for="conta_nome">Nome da Conta:</label>
         <input class="form-input" type="text" id="conta_nome" name="conta_nome" required>
+    </div>
+    <div>
+        <label class="form-label" for="conta_email">E-mail:</label>
+        <input class="form-input" type="text" id="conta_email" name="conta_email" required>
+    </div>
+    <div>
+        <label class="form-label" for="conta_senha">Senha:</label>
+        <input class="form-input" type="password" id="conta_senha" name="conta_senha" required>
     </div>
     <div>
         <label class="form-label" for="saldo_inicial">Saldo Inicial (R$):</label>

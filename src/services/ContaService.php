@@ -9,6 +9,8 @@ use app\contracts\core\INotification;
 use app\contracts\services\IContaService;
 use Exception;
 
+use function PHPUnit\Framework\throwException;
+
 class ContaService implements IContaService {
 
     private $ContaModel;
@@ -25,20 +27,27 @@ class ContaService implements IContaService {
         $this->CaixaEletronicoService = $caixaEletronicoService;
     }
 
-    public function loginConta($contaId, $contaSenha) {
+    public function loginConta($contaEmail, $contaSenha) {
         try{
-            if(!isset($contaId, $contaSenha) || empty($contaId) || empty($contaSenha)){
-                throw new \Exception('ID da conta ou senha inválidos');
+            if(!isset($contaEmail, $contaSenha) || empty($contaEmail) || empty($contaSenha)){
+                throw new \Exception('E-mail ou senha inválidos');
             }
-            $conta = $this->ContaDao->getContaById($contaId);
-            if ($conta && password_verify($contaSenha, $conta['conta_senha'])) {
+            $conta = $this->ContaDao->getContaByEmail($contaEmail);
+            $SenhaContaBanco = $conta['conta_senha'];
+            // $contaSenha = password_hash($contaSenha, PASSWORD_BCRYPT);
+            if ($conta && password_verify($contaSenha, $SenhaContaBanco)) {
+            // if ($conta && $contaSenha == $SenhaContaBanco) {
                 $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
-                $_SESSION['conta_id'] = $conta['conta_id'];
-                $this->logger->log("Conta logada com ID: " . $contaId);
+                $_SESSION['conta_id']    = $conta['conta_id'];
+                $_SESSION['conta_nome']  = $conta['conta_nome'];
+                $_SESSION['conta_saldo'] = $conta['conta_saldo'];
+                $_SESSION['conta_email'] = $conta['conta_email'];
+                
+                $this->logger->log("Conta logada com ID: " . $conta['conta_id']);
                 $this->notifications->add("Login realizado com sucesso", "success");
             } else {
-                $this->notifications->add("ID da conta ou senha inválidos", "error");
-                throw new \Exception('ID da conta ou senha inválidos');
+                $this->notifications->add("Email ou senha inválidos", "error");
+                throw new \Exception('Email ou senha inválidos');
             }
         }catch(\Exception $e){
             $this->logger->log("Erro ao fazer login: " . $e->getMessage());
@@ -55,7 +64,12 @@ class ContaService implements IContaService {
             $conta = $this->ContaDao->getContaById($contaId);
             if ($conta) {
                 $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
-                $_SESSION['conta_id'] = $conta['conta_id'];
+                if(isset($_SESSION)){
+                    $_SESSION['conta_id']    = $conta['conta_id'];
+                    $_SESSION['conta_nome']  = $conta['conta_nome'];
+                    $_SESSION['conta_saldo'] = $conta['conta_saldo'];
+                    $_SESSION['conta_email'] = $conta['conta_email'];
+                }
                 $this->logger->log("Conta alternada para ID: " . $contaId);
                 $this->notifications->add("Conta alternada com sucesso", "success");
             } else {
@@ -78,17 +92,23 @@ class ContaService implements IContaService {
             'conta_senha' => password_hash($contaSenha, PASSWORD_BCRYPT)
         ];
         try{
+            if(!isset($contaNome, $contaEmail, $contaSenha, $saldoInicial)){
+                throw new \Exception('Existem dados nulos no cadastro de conta');
+            }   
             $resultado = $this->ContaDao->createConta($dadosConta);
             if ($resultado) {
                 $this->logger->log("Nova conta criada: " . $contaNome);
                 $this->notifications->add("Conta criada com sucesso", "success");
+                return true;
             } else {
                 $this->logger->log("Erro ao criar conta");
                 $this->notifications->add("Erro ao criar conta", "error");
+                return false;
             }
         }catch(\Exception $e){
             $this->logger->log("Erro ao criar conta: " . $e->getMessage());
             $this->notifications->add("Erro ao criar conta", "error");
+            return false;
         }
     }
 
@@ -138,7 +158,12 @@ class ContaService implements IContaService {
         try{
             $conta = $this->ContaDao->getContaById($contaId);
             $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
-            $_SESSION['conta_id'] = $conta['conta_id'];
+            if(isset($_SESSION)){
+                $_SESSION['conta_id']    = $conta['conta_id'];
+                $_SESSION['conta_nome']  = $conta['conta_nome'];
+                $_SESSION['conta_saldo'] = $conta['conta_saldo'];
+                $_SESSION['conta_email'] = $conta['conta_email'];
+            }
             $this->CaixaEletronicoService->depositoCaixaEletronico($cedulas);
             $valor = $this->CaixaEletronicoService->getCaixaEletronicoModel()->CalculaTotalByCedulas($cedulas);
             $this->ContaModel->DepositoConta($valor);
@@ -156,7 +181,12 @@ class ContaService implements IContaService {
         try {
             $conta = $this->ContaDao->getContaById($conta_id);
             $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
-            $_SESSION['conta_id'] = $conta['conta_id'];
+            if(isset($_SESSION)){
+                $_SESSION['conta_id']    = $conta['conta_id'];
+                $_SESSION['conta_nome']  = $conta['conta_nome'];
+                $_SESSION['conta_saldo'] = $conta['conta_saldo'];
+                $_SESSION['conta_email'] = $conta['conta_email'];
+            }
             if (!$this->ContaModel->isSaquePermitidoConta($valor)) {
                 $this->notifications->add("Saldo insuficiente na conta ID: " . $this->ContaModel->getId() . " para saque de R$ " . number_format($valor, 2), "error");
                 $this->logger->log("Tentativa de saque na conta ID: " . $this->ContaModel->getId() . " no valor de R$ " . number_format($valor, 2) . " falhou: saldo insuficiente.");

@@ -174,11 +174,14 @@ class Router {
     // Métodos auxiliares para definir rotas comuns
     public function setupDefaultRoutes() {
         // Pagina inicial
-        $this->addRoute('GET', '/', 'ContaController', 'listarContasView');
+        $this->addRoute('GET', '/', 'ContaController', 'loginContaView');
         
         // Rotas para ContaController
-        $this->addRoute('GET', '/conta/selecionar',          'ContaController', 'listarContasView');
+        $this->addRoute('GET', '/conta/login',               'ContaController', 'loginContaView');
+        $this->addRoute('GET', '/conta/criar',               'ContaController', 'criarContaView');
         $this->addRoute('GET', '/conta/menuCaixaView',       'ContaController', 'menuCaixaView');
+        $this->addRoute('get', '/conta/logoutAction',        'ContaController', 'logoutContaAction');
+        $this->addRoute('POST', '/conta/loginAction',        'ContaController', 'loginContaAction');
         $this->addRoute('POST', '/conta/alternarContaAction','ContaController', 'alternarContaAction');
         $this->addRoute('GET', '/conta/alternarContaAction', 'ContaController', 'alternarContaAction');
         $this->addRoute('POST', '/conta/criarContaAction',   'ContaController', 'criarContaAction');
@@ -186,7 +189,6 @@ class Router {
         $this->addRoute('POST', '/conta/deposito',           'ContaController', 'depositoContaAction');
         $this->addRoute('GET', '/conta/saque',               'ContaController', 'saqueContaAction');
         $this->addRoute('POST', '/conta/saque',              'ContaController', 'saqueContaAction');
-        $this->addRoute('GET', '/conta/criar',               'ContaController', 'criarContaView');
 
         // Rotas para CaixaEletronicoController
         $this->addRoute('GET', '/caixa/estoqueCaixaAction',    'CaixaEletronicoController', 'estoqueCaixaAction');

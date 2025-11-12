@@ -30,13 +30,12 @@ class ContaService implements IContaService {
     public function loginConta($contaEmail, $contaSenha) {
         try{
             if(!isset($contaEmail, $contaSenha) || empty($contaEmail) || empty($contaSenha)){
-                throw new \Exception('E-mail ou senha inválidos');
+                $this->notifications->add("Email ou senha vazio", "error");
+                throw new \Exception('E-mail ou senha vazio');
             }
             $conta = $this->ContaDao->getContaByEmail($contaEmail);
             $SenhaContaBanco = $conta['conta_senha'];
-            // $contaSenha = password_hash($contaSenha, PASSWORD_BCRYPT);
             if ($conta && password_verify($contaSenha, $SenhaContaBanco)) {
-            // if ($conta && $contaSenha == $SenhaContaBanco) {
                 $this->ContaModel->loadDataConta($conta['conta_id'], $conta['conta_nome'], $conta['conta_saldo'], $conta['conta_email']);
                 $_SESSION['conta_id']    = $conta['conta_id'];
                 $_SESSION['conta_nome']  = $conta['conta_nome'];
@@ -46,13 +45,13 @@ class ContaService implements IContaService {
                 $this->logger->log("Conta logada com ID: " . $conta['conta_id']);
                 $this->notifications->add("Login realizado com sucesso", "success");
             } else {
-                $this->notifications->add("Email ou senha inválidos", "error");
-                throw new \Exception('Email ou senha inválidos');
+                $this->notifications->add("Email ou senha incorretos", "error");
+                throw new \Exception('Email ou senha incorretos');
             }
         }catch(\Exception $e){
             $this->logger->log("Erro ao fazer login: " . $e->getMessage());
             $this->notifications->add("Erro ao fazer login", "error");
-            throw new \Exception('Erro ao fazer login');
+            throw new \Exception('Erro ao fazer login' . $e->getMessage());
         }
     }
 
@@ -87,6 +86,7 @@ class ContaService implements IContaService {
     public function criarConta($contaNome, $contaEmail, $contaSenha, $saldoInicial) {
         try{
             if(!isset($contaNome) || !isset($contaEmail) || !isset($contaSenha) || !isset($saldoInicial)){
+                $this->notifications->add("Existem dados nulos no cadastro de conta", "error");
                 throw new \Exception('Existem dados nulos no cadastro de conta');
             }   
 
@@ -106,16 +106,13 @@ class ContaService implements IContaService {
             if ($resultado) {
                 $this->logger->log("Nova conta criada: " . $contaNome);
                 $this->notifications->add("Conta criada com sucesso", "success");
-                return true;
             } else {
                 $this->logger->log("Erro ao criar conta");
                 $this->notifications->add("Erro ao criar conta", "error");
-                return false;
             }
         }catch(\Exception $e){
             $this->logger->log("Erro ao criar conta: " . $e->getMessage());
             $this->notifications->add("Erro ao criar conta", "error");
-            return false;
         }
     }
 

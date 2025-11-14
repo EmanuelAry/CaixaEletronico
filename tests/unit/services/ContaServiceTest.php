@@ -9,8 +9,7 @@ use app\contracts\services\ICaixaEletronicoService;
 use app\contracts\core\ILogger;
 use app\core\Notification;
 
-class ContaServiceTest extends TestCase
-{
+class ContaServiceTest extends TestCase{
     private $contaModelMock;
     private $contaDaoMock;
     private $caixaEletronicoMock;
@@ -18,8 +17,7 @@ class ContaServiceTest extends TestCase
     private $notifications;
     private $contaService;
 
-    protected function setUp(): void
-    {
+    protected function setUp(): void {
         $this->contaModelMock = $this->createMock(IContaModel::class);
         $this->contaDaoMock = $this->createMock(IContaDao::class);
         $this->caixaEletronicoMock = $this->createMock(ICaixaEletronicoService::class);
@@ -91,7 +89,7 @@ class ContaServiceTest extends TestCase
 
     }
 
-    public function testValidarLoginConta() {
+    public function testValidarLoginConta(){
         $conta = [
             'conta_id'=> 1,
             'conta_nome' => 'João Melão',
@@ -111,11 +109,11 @@ class ContaServiceTest extends TestCase
         $this->assertEquals('success', $notifications[0]['type'], "tipo da notificação não bate com o estipulado no teste");
     }
 
-    public function testBloqueioLoginContaSenhaIncorreta () {
+    public function testBloqueioLoginContaSenhaIncorreta(){
         $conta = [
             'conta_id'=> 1,
             'conta_nome' => 'João Melão',
-            'conta_saldo' => '900,00',
+            'conta_saldo' => 900.00,
             'conta_email' => 'joao.melao@email.com',
             'conta_senha' => password_hash('senha_correta', PASSWORD_BCRYPT)
         ];
@@ -132,85 +130,107 @@ class ContaServiceTest extends TestCase
         $this->assertEquals('error', $notifications[0]['type'], "tipo da notificação não bate com o estipulado no teste");
     }
 
+    public function testValidarSaqueConta(){
+        $regraSaque = 0;
+        $valorSaque = 100;
+        $contaId = 1;
+        $conta = [
+            'conta_id'=> $contaId,
+            'conta_nome' => 'João Melão',
+            'conta_saldo' => 900.00,
+            'conta_email' => 'joao.melao@email.com',
+            'conta_senha' => password_hash('senha_correta', PASSWORD_BCRYPT)
+        ];
+        $this->contaDaoMock->method('getContaById')->willReturn($conta);
+        $this->contaModelMock->method('loadDataConta');
+        $this->contaModelMock->method('isSaquePermitidoConta')->willReturn(true);
+        $this->caixaEletronicoMock->method('saqueCaixaEletronico');
+        $this->contaModelMock->method('SaqueConta');
+        $this->contaModelMock->method('getSaldo')->willReturn($conta['conta_saldo'] - $valorSaque);
+        $this->contaModelMock->method('getId')->willReturn($contaId);
+        $this->contaDaoMock->method('updateSaldo')->willReturn($conta);
+        $this->loggerMock->method('log');
 
-    // public function testAlternarContaComSucesso()
-    // {
-    //     $contaId = 1;
-    //     $contaData = ['conta_id' => 1, 'conta_nome' => 'Conta Teste', 'conta_saldo' => 100.00];
+        $this->contaService->saqueConta($contaId, $valorSaque, $regraSaque);
 
-    //     $this->contaDaoMock->method('getContaById')->willReturn($contaData);
-    //     $this->contaModelMock->expects($this->once())->method('loadDataConta');
-    //     $this->loggerMock->expects($this->once())->method('log');
-    //     $this->notificationMock->expects($this->once())->method('add');
+        $notifications = $this->notifications->getNotifications();
+        $this->assertCount(1, $notifications, "Numero de notificação não bate com o estipulado no teste");
+        $this->assertEquals("Saque de R$ " . number_format($valorSaque, 2) . " realizado com sucesso.", $notifications[0]['message'], "Mensagem da notificação não bate com o estipulado no teste");
+        $this->assertEquals('success', $notifications[0]['type'], "tipo da notificação não bate com o estipulado no teste");
+    } 
 
-    //     $this->contaService->alternarConta($contaId);
-        
-    //     $this->assertEquals($contaId, ['conta_id']);
-    // }
+    public function testBloqueioSaqueContaSaldoInsuficiente(){
+        $regraSaque = 0;
+        $valorSaque = 100;
+        $contaId = 1;
+        $conta = [
+            'conta_id'=> $contaId,
+            'conta_nome' => 'João Melão',
+            'conta_saldo' => 90.00,
+            'conta_email' => 'joao.melao@email.com',
+            'conta_senha' => password_hash('senha_correta', PASSWORD_BCRYPT)
+        ];
+        $this->contaDaoMock->method('getContaById')->willReturn($conta);
+        $this->contaModelMock->method('loadDataConta');
+        $this->contaModelMock->method('isSaquePermitidoConta')->willReturn(false);
+        $this->caixaEletronicoMock->method('saqueCaixaEletronico');
+        $this->contaModelMock->method('SaqueConta');
+        $this->contaModelMock->method('getSaldo')->willReturn($conta['conta_saldo'] - $valorSaque);
+        $this->contaModelMock->method('getId')->willReturn($contaId);
+        $this->contaDaoMock->method('updateSaldo')->willReturn($conta);
+        $this->loggerMock->method('log');
 
-    // public function testAlternarContaComContaNaoEncontrada()
-    // {
-    //     $this->contaDaoMock->method('getContaById')->willReturn(null);
-    //     $this->notificationMock->expects($this->once())->method('add');
-    //     $this->loggerMock->expects($this->once())->method('log');
+        $this->contaService->saqueConta($contaId, $valorSaque, $regraSaque);
 
-    //     $this->expectException(\Exception::class);
-    //     $this->contaService->alternarConta(999);
-    // }
+        $notifications = $this->notifications->getNotifications();
+        $this->assertCount(2, $notifications, "Numero de notificação não bate com o estipulado no teste");
+        $this->assertEquals("Saldo insuficiente na conta ID: " . $contaId . " para saque de R$ " . number_format($valorSaque, 2), $notifications[0]['message'], "Mensagem da notificação não bate com o estipulado no teste");
+        $this->assertEquals('error', $notifications[0]['type'], "tipo da notificação não bate com o estipulado no teste");
+    } 
 
-    // public function testListarContas()
-    // {
-    //     $expected = [['conta_id' => 1, 'conta_nome' => 'Conta Teste']];
-    //     $this->contaDaoMock->method('getAllContas')->willReturn($expected);
+    public function testValidarDepositoValoresConta(){
+        $contaId = 1;
+        $saldoConta = 90.00;
+        $valorDeposito = 70.00;
+        $conta = [
+            'conta_id'=> $contaId,
+            'conta_nome' => 'João Melão',
+            'conta_saldo' => $saldoConta,
+            'conta_email' => 'joao.melao@email.com',
+            'conta_senha' => password_hash('senha_correta', PASSWORD_BCRYPT)
+        ];
+        $cedulasDepostio = [
+            '200'  => 0, 
+            '100'  => 0, 
+            '50'   => 1, 
+            '20'   => 1, 
+            '10'   => 0, 
+            '5'    => 0, 
+            '2'    => 0, 
+            '1'    => 0, 
+            '0.50' => 0, 
+            '0.25' => 0, 
+            '0.10' => 0, 
+            '0.05' => 0 
+        ];
+        $this->contaDaoMock->method('getContaById')->willReturn($conta);
+        $this->contaModelMock->method('loadDataConta');
+        $this->caixaEletronicoMock->method('depositoCaixaEletronico');
+        $caixaModelMock = $this->createMock(\app\contracts\models\ICaixaEletronicoModel::class);
+        $this->caixaEletronicoMock->method('getCaixaEletronicoModel')->willReturn($caixaModelMock);
+        $caixaModelMock->method('CalculaTotalByCedulas')->with($cedulasDepostio)->willReturn($valorDeposito);
+        $this->caixaEletronicoMock->method('depositoCaixaEletronico')->with($cedulasDepostio);
+        $this->contaModelMock->method('DepositoConta');
+        $this->contaModelMock->method('getSaldo')->willReturn($saldoConta + $valorDeposito);
+        $this->contaModelMock->method('getId')->willReturn($contaId);
+        $this->contaDaoMock->method('updateSaldo');
+        $this->loggerMock->method('log');
 
-    //     $result = $this->contaService->listarContas();
-        
-    //     $this->assertEquals($expected, $result);
-    // }
+        $this->contaService->depositoConta($contaId, $cedulasDepostio);
 
-    // public function testSaqueContaComSaldoInsuficiente()
-    // {
-    //     $_POST = [
-    //         'regra_saque' => 0,
-    //         'valor_saque' => 150.00,
-    //         'conta_id' => 1
-    //     ];
-
-    //     $contaData = ['conta_id' => 1, 'conta_nome' => 'Conta Teste', 'conta_saldo' => 100.00];
-        
-    //     $this->contaDaoMock->method('getContaById')->willReturn($contaData);
-    //     $this->contaModelMock->method('isSaquePermitidoConta')->willReturn(false);
-    //     $this->notificationMock->expects($this->once())->method('add');
-    //     $this->loggerMock->expects($this->once())->method('log');
-
-    //     $this->contaService->saqueContaAction();
-    // }
-
-    // public function testDepositoContaAction()
-    // {
-    //     $_POST = [
-    //         'cedulas' => '{"100":2, "50":1}',
-    //         'conta_id' => 1
-    //     ];
-
-    //     $contaData = ['conta_id' => 1, 'conta_nome' => 'Conta Teste', 'conta_saldo' => 100.00];
-    //     $caixaModelMock = $this->createMock(\app\contracts\models\ICaixaEletronicoModel::class);
-        
-    //     $this->contaDaoMock->method('getContaById')->willReturn($contaData);
-    //     $this->caixaEletronicoMock->method('getCaixaEletronicoModel')->willReturn($caixaModelMock);
-    //     $caixaModelMock->method('CalculaTotalByCedulas')->willReturn(250.00);
-        
-    //     $this->caixaEletronicoMock->expects($this->once())->method('depositoCaixaEletronicoAction');
-    //     $this->contaModelMock->expects($this->once())->method('DepositoConta');
-    //     $this->contaDaoMock->expects($this->once())->method('updateSaldo');
-    //     $this->notificationMock->expects($this->once())->method('add');
-
-    //     $this->contaService->depositoContaAction();
-    // }
-
-    // protected function tearDown(): void
-    // {
-    //     unset($_SESSION['conta_id']);
-    //     unset($_POST);
-    // }
+        $notifications = $this->notifications->getNotifications();
+        $this->assertCount(1, $notifications, "Numero de notificação não bate com o estipulado no teste");
+        $this->assertEquals("Depósito de R$ " . number_format($valorDeposito, 2) . " realizado com sucesso.", $notifications[0]['message'], "Mensagem da notificação não bate com o estipulado no teste");
+        $this->assertEquals('success', $notifications[0]['type'], "tipo da notificação não bate com o estipulado no teste");
+    } 
 }

@@ -3,11 +3,10 @@ namespace app\models;
 use app\models\ContratoModel;
 use app\contracts\models\ICaixaEletronicoModel;
 use app\contracts\dao\ICaixaEletronicoDao;
-use app\dao\CaixaEletronicoDao;
 
 class CaixaEletronicoModel extends ContratoModel implements ICaixaEletronicoModel {
 
-    private CaixaEletronicoDao $caixaDao;
+    private ICaixaEletronicoDao $caixaDao;
     private $cedula = [
         '200'  => 0,
         '100'  => 0,

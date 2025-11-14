@@ -194,7 +194,7 @@ class ContaService implements IContaService {
             if (!$this->ContaModel->isSaquePermitidoConta($valor)) {
                 $this->notifications->add("Saldo insuficiente na conta ID: " . $this->ContaModel->getId() . " para saque de R$ " . number_format($valor, 2), "error");
                 $this->logger->log("Tentativa de saque na conta ID: " . $this->ContaModel->getId() . " no valor de R$ " . number_format($valor, 2) . " falhou: saldo insuficiente.");
-                return;
+                throw new \Exception('Saldo insuficiente na conta');
             }
             $this->CaixaEletronicoService->saqueCaixaEletronico($valor, $regraSaque);
             $this->ContaModel->SaqueConta($valor);
@@ -204,7 +204,7 @@ class ContaService implements IContaService {
             $this->logger->log("Saque de R$ " . number_format($valor, 2) . " na conta ID:" . $this->ContaModel->getId() . " realizado com sucesso.");
         } catch (\Exception $e) {
             $this->logger->log("Erro durante saque na conta ID:" . $this->ContaModel->getId() . ": " . $e->getMessage());
-            $this->notifications->add("Erro ao realizar saque:". $e->getMessage(), "error");
+            $this->notifications->add("Erro ao realizar saque", "error");
         }
     }    
 }

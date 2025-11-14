@@ -75,14 +75,14 @@ class ContaDaoTest extends TestCase{
         $this->assertArrayHasKey('conta_id', $conta);
     }
 
-        public function testValidarBuscaDadosLoginContaId () {
+    public function testValidarBuscaDadosLoginContaId () {
         // Inserir dados de teste diretamente no banco
         $this->pdo->exec("
             INSERT INTO conta (conta_nome, conta_email, conta_senha, conta_saldo)
             VALUES ('João Melão', 'joao.melao@email.com', 'senha123', 1500.75)
         ");
 
-        // Buscar conta por email
+        // Buscar conta pelo id
         $conta = $this->dao->getContaById(1);
 
         $this->assertIsArray($conta);
@@ -91,5 +91,21 @@ class ContaDaoTest extends TestCase{
         $this->assertEquals(1500.75, $conta['conta_saldo']);
         $this->assertEquals('senha123', $conta['conta_senha']);
         $this->assertArrayHasKey('conta_id', $conta);
+    }
+
+    public function testValidarAtualizacaoSaldoConta(){
+        $idConta = 1;
+        $novoSaldo = 300.25;
+        // Inserir dados de teste diretamente no banco
+        $this->pdo->exec("
+            INSERT INTO conta (conta_nome, conta_email, conta_senha, conta_saldo)
+            VALUES ('João Melão', 'joao.melao@email.com', 'senha123', 1500.75)
+        ");
+
+        $conta = $this->dao->updateSaldo($idConta, $novoSaldo);
+
+        $retorno = $this->dao->getContaById($idConta);
+        $this->assertIsArray($retorno);
+        $this->assertEquals(300.25, $retorno['conta_saldo']);     
     }
 }

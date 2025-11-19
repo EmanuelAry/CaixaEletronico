@@ -11,7 +11,7 @@ include __DIR__ . '/../templates/header.php';
     <h2 class="subtitle">Entrar em uma conta existente</h2>
     <form class="form-group" method="POST" action="<?php echo UrlHelper::baseUrl('/conta/loginAction/?XDEBUG_SESSION=VSCODE'); ?>">
         <div class="form-group">
-            <label class="form-label" for="conta_email">Email:</label>
+            <label class="form-label" for="conta_email">E-mail:</label>
             <input class="form-input" type="email" id="conta_email" name="conta_email" required 
                    placeholder="Digite o email da conta">
         </div>

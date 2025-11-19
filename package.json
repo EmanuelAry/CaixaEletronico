@@ -1,0 +1,26 @@
+{
+  "name": "caixaeletronico",
+  "version": "1.0.0",
+  "description": "Sistema de caixa eletrônico desenvolvido em PHP puro, seguindo princípios SOLID e arquitetura MVC. O sistema oferece funcionalidades completas de gestão de contas, saques, depósitos e controle de inventário de cédulas.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmanuelAry/CaixaEletronico.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EmanuelAry/CaixaEletronico/issues"
+  },
+  "homepage": "https://github.com/EmanuelAry/CaixaEletronico#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.1"
+  }
+}

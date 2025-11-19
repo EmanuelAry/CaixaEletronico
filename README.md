@@ -45,18 +45,34 @@ CaixaEletronico/
 │   │   ├── Logger.php           # Log de operações
 │   │   └── Notification.php     # Sistema de notificações
 │   ├── contracts/               # Interfaces
-│   │   ├── ICaixaEletronicoModel.php
-│   │   ├── ICaixaEletronicoDao.php
-│   │   ├── ILogger.php
-│   │   └── INotification.php
+│   │   ├── core/
+│   │   │   ├── ILogger.php
+│   │   │   └── INotification.php
+│   │   ├── models/
+│   │   │   ├── IContaModel.php
+│   │   │   └── ICaixaEletronicoModel.php
+│   │   ├── dao/
+│   │   │   ├── IContaDao.php 
+│   │   │   └── ICaixaEletronicoDao.php 
+│   │   ├── controllers/  
+│   │   │   ├── IContaController.php
+│   │   │   └── ICaixaEletronicoController.php
+│   │   └── services/   
+│   │       ├── ContaService.php
+│   │       └── CaixaEletronicoService.php
 │   ├── models/                  # Modelos de dados
+│   │   ├── ContaModel.php    
 │   │   ├── ContratoModel.php    # Estratégias de saque
 │   │   └── CaixaEletronicoModel.php
 │   ├── dao/                     # Data Access Object
+│   │   ├── ContaDao.php
 │   │   └── CaixaEletronicoDao.php
 │   ├── controllers/             # Controladores
 │   │   ├── ContaController.php
 │   │   └── CaixaEletronicoController.php
+│   ├── services/               # Services
+│   │   ├── ContaService.php
+│   │   └── CaixaEletronicoService.php
 │   ├── views/                   # Telas do sistema
 │   │   ├── conta/
 │   │   │   ├── selecionarconta.php
